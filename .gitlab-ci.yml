@@ -1,0 +1,47 @@
+stages:
+  - build_base
+  - build_servers
+  - deploy
+  - test
+  - clean
+
+image: carterjones/infra-builder:latest
+
+before_script:
+  - cd ci
+
+build_base:
+  stage: build_base
+  script: bash build-base.sh
+  only:
+    - master
+
+build_hackbox:
+  stage: build_servers
+  script: bash build-hackbox.sh
+  only:
+    - master
+
+build_website:
+  stage: build_servers
+  script: bash build-website.sh
+  only:
+    - master
+
+deploy_website:
+  stage: deploy
+  script: bash deploy-website.sh
+  only:
+    - master
+
+test_website:
+  stage: test
+  script: bash test-website.sh
+  only:
+    - master
+
+clean_aws_resources:
+  image: python:3.5
+  stage: clean
+  script:
+    - bash clean-up.sh

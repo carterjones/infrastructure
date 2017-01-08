@@ -1,0 +1,7 @@
+*.box
+*.log
+*.terraform
+*.vagrant
+*.venv
+go-website
+packer_cache

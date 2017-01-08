@@ -1,0 +1,53 @@
+{
+    "variables": {
+        "subnet_id": "{{env `subnet_id`}}",
+        "vpc_id": "{{env `vpc_id`}}"
+    },
+    "builders": [{
+        "encrypt_boot": "true",
+        "type": "amazon-ebs",
+        "region": "us-west-2",
+        "source_ami_filter": {
+            "filters": {
+                "virtualization-type": "hvm",
+                "name": "*ubuntu-xenial-16.04-amd64-server-*",
+                "root-device-type": "ebs"
+            },
+            "owners": ["099720109477"],
+            "most_recent": true
+        },
+        "instance_type": "t2.nano",
+        "subnet_id": "{{user `subnet_id`}}",
+        "ssh_username": "ubuntu",
+        "vpc_id": "{{user `vpc_id`}}",
+        "ami_name": "base-{{timestamp}}",
+        "tags": {
+            "role": "base"
+        }
+    }],
+    "provisioners": [
+        {
+            "type": "file",
+            "source": "scripts",
+            "destination": "/tmp"
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "chown ubuntu:ubuntu -R /tmp/scripts"
+            ]
+        },
+        {
+            "type": "shell",
+            "script": "pack.sh"
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "sudo apt-get -y autoremove",
+                "sudo apt-get -y clean",
+                "sync"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+$migrate_files_and_scripts = <<SCRIPT
+cp -r /vagrant/scripts /tmp
+SCRIPT
+
+$cleanup = <<SCRIPT
+sudo apt-get -y autoremove
+sudo apt-get -y clean
+sync
+SCRIPT
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "bento/ubuntu-16.04"
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.gui = false
+    vb.memory = "1024"
+  end
+
+  # This tries to mimic template.json's logic.
+  config.vm.provision "shell", inline: $migrate_files_and_scripts
+  config.vm.provision "shell", inline: "/bin/bash /vagrant/pack.sh"
+  config.vm.provision "shell", inline: $cleanup
+end
