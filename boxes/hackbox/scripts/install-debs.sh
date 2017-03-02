@@ -6,6 +6,7 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confn
      nbtscan \
      openvpn \
      postgresql \
+     recode \
      virt-what \
      virtualbox-guest-dkms \
      virtualbox-guest-utils \
