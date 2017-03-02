@@ -4,6 +4,7 @@ set -eux -o pipefail
 sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confnew" install \
      nmap \
      nbtscan \
+     openvpn \
      postgresql \
      virt-what \
      virtualbox-guest-dkms \
