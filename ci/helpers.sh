@@ -4,7 +4,7 @@ files_changed() {
     # Narrow to the last two merges to master (this and the prior one). Then
     # get the commit prior to this one and extract the commit id.
     last_merge_to_master=$(
-        git log --all --grep="Merge branch.*into master" --oneline | \
+        git log --all --grep="Merge branch 'dev'" --oneline | \
             head -2 | \
             tail -1 | \
             sed "s/ .*//")
