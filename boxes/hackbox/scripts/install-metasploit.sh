@@ -12,3 +12,6 @@ if [[ ! -f /usr/bin/msfconsole ]]; then
 fi
 
 popd
+
+# Enable the PostgreSQL service on boot.
+update-rc.d postgresql enable
