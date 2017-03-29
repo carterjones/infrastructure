@@ -2,8 +2,12 @@
 set -eux -o pipefail
 
 sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confnew" install \
-    postgresql \
-    nmap \
-    nbtscan \
-    virt-what \
-    wireshark
+     nmap \
+     nbtscan \
+     postgresql \
+     virt-what \
+     virtualbox-guest-dkms \
+     virtualbox-guest-utils \
+     virtualbox-guest-x11 \
+     wireshark \
+     xfce4
