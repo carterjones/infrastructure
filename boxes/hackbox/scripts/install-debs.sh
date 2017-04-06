@@ -6,6 +6,7 @@ echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select tr
 echo ttf-mscorefonts-installer msttcorefonts/present-mscorefonts-eula select false | sudo debconf-set-selections
 
 sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confnew" install \
+     awscli \
      nmap \
      nbtscan \
      openvpn \
