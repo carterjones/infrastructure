@@ -13,5 +13,6 @@ bash configure-motd.sh
 bash install-debs.sh
 bash install-enum4linux.sh
 bash install-metasploit.sh
+bash install-synack-cert.sh
 
 popd
