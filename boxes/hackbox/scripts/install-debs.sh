@@ -5,7 +5,14 @@ set -eux -o pipefail
 echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
 echo ttf-mscorefonts-installer msttcorefonts/present-mscorefonts-eula select false | sudo debconf-set-selections
 
+# Add i386 architecture for Wine.
+sudo dpkg --add-architecture i386
+
+# Update apt.
+sudo apt-get update
+
 sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confnew" install \
+     awscli \
      nmap \
      nbtscan \
      openvpn \
