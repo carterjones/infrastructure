@@ -1,0 +1,9 @@
+ghost:
+  image: carterjones/ghost
+  environment:
+    - NODE_ENV=production
+  ports:
+    - "8002:2368"
+  volumes:
+    - /mnt/data/blog.carterjones.info/:/var/lib/ghost
+  restart: always
