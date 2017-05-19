@@ -1,0 +1,9 @@
+[Unit]
+Description=Format EBS volume if needed
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/bash -c \
+'(/sbin/blkid /dev/xvdb) || \
+(/sbin/wipefs -fa /dev/xvdb && /sbin/mkfs.ext4 /dev/xvdb)'

@@ -1,0 +1,9 @@
+ghost:
+  image: carterjones/ghost
+  environment:
+    - NODE_ENV=production
+  ports:
+    - "8001:2368"
+  volumes:
+    - /mnt/data/test.kelsey.life/:/var/lib/ghost
+  restart: always
