@@ -7,7 +7,7 @@ ec2_resource = boto3.resource('ec2', region_name='us-west-2')
 ec2_client = boto3.client('ec2')
 
 # Deregister old AMIs.
-roles = ["base", "blog", "dev", "hackbox", "go-website"]
+roles = ["base", "blog", "dev", "git", "hackbox", "go-website"]
 for role in roles:
     amis = list(ec2_resource.images.filter(
         Owners=["self"],
