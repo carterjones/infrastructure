@@ -1,0 +1,11 @@
+[Unit]
+Description=Configure gitolite
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/opt/carter
+ExecStart=/bin/bash /opt/carter/init.sh
+
+[Install]
+WantedBy=multi-user.target

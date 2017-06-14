@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo tar -zcvf /home/ubuntu/backup.tar.gz /mnt/data/
+sudo chown ubuntu:ubuntu /home/ubuntu/backup.tar.gz
