@@ -1,0 +1,33 @@
+resources:
+  - name: repo
+    type: git
+    source:
+      uri: https://github.com/carterjones/infrastructure
+      branch: master
+
+  - name: weekly
+    type: time
+    source:
+      start: 7:00 AM
+      stop: 9:00 AM
+      days: [Saturday]
+
+jobs:
+  - name: build
+    plan:
+      - aggregate:
+          - get: repo
+            trigger: true
+          - get: weekly
+            trigger: true
+      - task: build
+        file: repo/ci/build/base.yml
+
+  - name: deploy-test
+    plan:
+      - get: repo
+        passed: [build]
+      - task: deploy-test
+        file: repo/ci/deploy/base.yml
+
+# TODO: add some type of notification of success/failure

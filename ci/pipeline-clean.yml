@@ -1,0 +1,21 @@
+resources:
+  - name: repo
+    type: git
+    source:
+      uri: https://github.com/carterjones/infrastructure
+      branch: master
+
+  - name: hourly
+    type: time
+    source: {interval: 1h}
+
+jobs:
+  - name: clean-all
+    plan:
+      - aggregate:
+          - get: repo
+            trigger: true
+          - get: hourly
+            trigger: true
+      - task: clean-all
+        file: repo/ci/clean/all.yml

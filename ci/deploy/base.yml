@@ -1,0 +1,12 @@
+# TODO: verify base can be deployed and that the ubuntu can SSH in
+
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: carterjones/infra-builder
+
+run:
+  path: echo
+  args: ["This is a placeholder."]

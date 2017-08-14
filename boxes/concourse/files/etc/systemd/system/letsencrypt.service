@@ -1,0 +1,10 @@
+[Unit]
+Description=Call letsencrypt to install certificates
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/bash /opt/carter/letsencrypt.sh
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,37 @@
+resources:
+  - name: repo
+    type: git
+    source:
+      uri: https://github.com/carterjones/infrastructure
+      branch: f/hax
+
+jobs:
+  - name: build-base
+    plan:
+      - get: repo
+      - task: build
+        file: repo/ci/build/base.yml
+
+  - name: build-blog
+    plan:
+      - get: repo
+      - task: build
+        file: repo/ci/build/blog.yml
+
+  - name: build-concourse
+    plan:
+      - get: repo
+      - task: build
+        file: repo/ci/build/concourse.yml
+
+  - name: build-git
+    plan:
+      - get: repo
+      - task: build
+        file: repo/ci/build/git.yml
+
+  - name: clean-all
+    plan:
+      - get: repo
+      - task: clean-all
+        file: repo/ci/clean/all.yml

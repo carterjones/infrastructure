@@ -1,0 +1,12 @@
+[Unit]
+Description=Concourse CI worker process
+After=concourse-web.service
+
+[Service]
+User=root
+Restart=on-failure
+EnvironmentFile=/etc/concourse/worker_environment
+ExecStart=/usr/local/bin/concourse worker
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,64 @@
+{
+    "variables": {
+        "subnet_id": "{{env `subnet_id`}}",
+        "vpc_id": "{{env `vpc_id`}}"
+    },
+    "builders": [{
+        "type": "amazon-ebs",
+        "region": "us-west-2",
+        "source_ami_filter": {
+            "filters": {
+                "tag-key": "role",
+                "tag-value": "base"
+            },
+            "owners": ["self"],
+            "most_recent": true
+        },
+        "instance_type": "t2.nano",
+        "subnet_id": "{{user `subnet_id`}}",
+        "ssh_username": "ubuntu",
+        "vpc_id": "{{user `vpc_id`}}",
+        "ami_name": "{{user `role`}}-{{timestamp}}",
+        "tags": {
+            "role": "{{user `role`}}",
+            "timestamp": "{{timestamp}}"
+        }
+    }],
+    "provisioners": [
+        {
+            "type": "file",
+            "source": "{{user `role`}}/files",
+            "destination": "/tmp"
+        },
+        {
+            "type": "shell",
+            "execute_command": "sudo /bin/bash -c '{{ .Vars }} {{ .Path }}'",
+            "inline": [
+                "set -eux",
+                "for dir in $(ls /tmp/files); do",
+                "    sudo cp -rf /tmp/files/$dir /",
+                "done"
+            ]
+        },
+        {
+            "type": "file",
+            "source": "{{user `role`}}/scripts",
+            "destination": "/tmp"
+        },
+        {
+            "type": "shell",
+            "execute_command": "sudo /bin/bash -c '{{ .Vars }} {{ .Path }}'",
+            "script": "{{user `role`}}/pack.sh"
+        },
+        {
+            "type": "shell",
+            "execute_command": "sudo /bin/bash -c '{{ .Vars }} {{ .Path }}'",
+            "inline": [
+                "set -eux",
+                "apt -y autoremove",
+                "apt -y clean",
+                "sync"
+            ]
+        }
+    ]
+}

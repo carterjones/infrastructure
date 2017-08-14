@@ -1,0 +1,21 @@
+#!/bin/bash
+set -euo pipefail
+
+maxRetries="$1"
+retryInterval="$2"
+shift 2
+cmd="$@"
+
+retry=0
+until [ ${retry} -ge ${maxRetries} ]
+do
+	$cmd && break
+	retry=$[${retry}+1]
+	echo "Retrying [${retry}/${maxRetries}] in ${retryInterval}(s) "
+	sleep ${retryInterval}
+done
+
+if [ ${retry} -ge ${maxRetries} ]; then
+  echo "Failed after ${maxRetries} attempts!"
+  exit 1
+fi
