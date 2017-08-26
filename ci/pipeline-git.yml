@@ -17,6 +17,7 @@ jobs:
     plan:
       - aggregate:
           - get: repo
+            trigger: true
           - get: weekly
             trigger: true
       - task: build

@@ -12,6 +12,26 @@ resources:
       stop: 9:00 AM
       days: [Saturday]
 
+  - name: base-rc
+    type: s3
+    source:
+      bucket: carterjones-pipeline-artifacts
+      versioned_file: base/ami-rc
+      region_name: us-west-2
+      private: true
+      access_key_id: {{concourse_access_key}}
+      secret_access_key: {{concourse_secret_key}}
+
+  - name: base-final
+    type: s3
+    source:
+      bucket: carterjones-pipeline-artifacts
+      versioned_file: base/ami
+      region_name: us-west-2
+      private: true
+      access_key_id: {{concourse_access_key}}
+      secret_access_key: {{concourse_secret_key}}
+
 jobs:
   - name: build
     plan:
@@ -22,12 +42,26 @@ jobs:
             trigger: true
       - task: build
         file: repo/ci/build/base.yml
+      - put: base-rc
+        params:
+          file: ami/id
 
-  - name: deploy-test
+  - name: test
     plan:
       - get: repo
         passed: [build]
-      - task: deploy-test
-        file: repo/ci/deploy/base.yml
+        trigger: true
+      - get: ami-in
+        resource: base-rc
+        trigger: true
+        passed: [build]
+      - task: test
+        file: repo/ci/test/ssh-login.yml
+        params:
+          ROLE: base
+          TIER: ci
+      - put: base-final
+        params:
+          file: ami-out/id
 
 # TODO: add some type of notification of success/failure

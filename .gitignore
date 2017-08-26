@@ -6,3 +6,4 @@
 *.venv
 go-website
 packer_cache
+secrets.yml

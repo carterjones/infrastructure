@@ -10,11 +10,6 @@ data "aws_ami" "concourse" {
     most_recent = true
 }
 
-resource "aws_iam_instance_profile" "concourse" {
-    name = "concourse"
-    role = "${aws_iam_role.concourse.id}"
-}
-
 resource "aws_instance" "concourse" {
     ami           = "${data.aws_ami.concourse.id}"
     instance_type = "t2.nano"
@@ -28,8 +23,49 @@ resource "aws_instance" "concourse" {
     ]
     tags = {
         role = "concourse"
-        Name = "concourse"
+        tier = "${var.tier}"
+        Name = "concourse-${var.tier}"
     }
+}
+
+data "aws_iam_policy_document" "concourse" {
+    statement {
+        actions = ["ec2:*"]
+        resources = ["*"]
+    }
+    statement {
+        actions = ["s3:*"]
+        resources = ["*"]
+    }
+    statement {
+        actions = ["s3:*"]
+        resources = ["arn:aws:s3:::carterjones-pipeline-artifacts*"]
+    }
+    statement {
+        actions = ["s3:*"]
+        resources = ["arn:aws:s3:::carterjones-pipeline-artifacts/*"]
+    }
+}
+
+resource "aws_iam_policy" "concourse" {
+    name   = "concourse-${var.tier}"
+    path   = "/"
+    policy = "${data.aws_iam_policy_document.concourse.json}"
+}
+
+resource "aws_iam_role" "concourse" {
+    name = "concourse-${var.tier}"
+    assume_role_policy = "${data.aws_iam_policy_document.ec2_assume_role.json}"
+}
+
+resource "aws_iam_role_policy_attachment" "concourse" {
+    role       = "${aws_iam_role.concourse.name}"
+    policy_arn = "${aws_iam_policy.concourse.arn}"
+}
+
+resource "aws_iam_instance_profile" "concourse" {
+    name = "concourse-${var.tier}"
+    role = "${aws_iam_role.concourse.id}"
 }
 
 resource "aws_eip" "concourse" {

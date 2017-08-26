@@ -55,8 +55,8 @@
             "execute_command": "sudo /bin/bash -c '{{ .Vars }} {{ .Path }}'",
             "inline": [
                 "set -eux",
-                "apt -y autoremove",
-                "apt -y clean",
+                "retry 10 30 apt -y autoremove",
+                "retry 10 30 apt -y clean",
                 "sync"
             ]
         }

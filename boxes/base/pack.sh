@@ -7,6 +7,7 @@ pushd /tmp/scripts
 
 bash full-upgrade.sh
 sudo -H -u $reg_user bash -c "/bin/bash /tmp/scripts/regular-scripts.sh"
+bash install-debs.sh
 
 # We need to run full-upgrade twice because packages somehow don't get
 # the upgraded versions installed when installed through other scripts.

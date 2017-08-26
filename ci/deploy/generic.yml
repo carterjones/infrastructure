@@ -8,9 +8,14 @@ image_resource:
 inputs:
   - name: repo
 
-outputs:
-  - name: ami
+params:
+  ROLE:
+  TIER:
 
 run:
-  path: repo/boxes/build.sh
-  args: [base]
+  path: sh
+  args:
+    - -exc
+    - |
+      ./deploy.sh $TIER $ROLE
+  dir: repo/terraform

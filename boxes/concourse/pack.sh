@@ -7,5 +7,6 @@ bash full-upgrade.sh
 bash install-concourse.sh
 bash install-nginx.sh
 bash install-letsencrypt.sh
+bash install-debs.sh
 
 popd

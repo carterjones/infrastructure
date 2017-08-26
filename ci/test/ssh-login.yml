@@ -7,10 +7,15 @@ image_resource:
 
 inputs:
   - name: repo
+  - name: ami-in
 
 outputs:
-  - name: ami
+  - name: ami-out
+
+params:
+  ROLE:
+  TIER:
 
 run:
-  path: repo/boxes/build.sh
+  path: repo/ci/test/ssh-login.sh
   args: [base]

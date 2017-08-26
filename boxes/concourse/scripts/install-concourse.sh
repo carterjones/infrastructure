@@ -2,9 +2,9 @@
 set -euxo pipefail
 
 # Install PostgreSQL.
-apt install -y \
-     postgresql \
-     postgresql-contrib
+retry 10 30 apt install -y \
+      postgresql \
+      postgresql-contrib
 
 # Set up a concourse user in the database.
 sudo -u postgres createuser concourse

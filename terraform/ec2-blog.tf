@@ -22,7 +22,7 @@ resource "aws_instance" "blog" {
     ]
     tags = {
         role = "blog"
-        Name = "blog"
+        Name = "blog-${var.tier}"
     }
 }
 

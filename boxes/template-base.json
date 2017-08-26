@@ -28,6 +28,21 @@
     "provisioners": [
         {
             "type": "file",
+            "source": "{{user `role`}}/files",
+            "destination": "/tmp"
+        },
+        {
+            "type": "shell",
+            "execute_command": "sudo /bin/bash -c '{{ .Vars }} {{ .Path }}'",
+            "inline": [
+                "set -eux",
+                "for dir in $(ls /tmp/files); do",
+                "    sudo cp -rf /tmp/files/$dir /",
+                "done"
+            ]
+        },
+        {
+            "type": "file",
             "source": "base/scripts",
             "destination": "/tmp"
         },
@@ -48,8 +63,8 @@
             "execute_command": "sudo /bin/bash -c '{{ .Vars }} {{ .Path }}'",
             "inline": [
                 "set -eux",
-                "apt -y autoremove",
-                "apt -y clean",
+                "retry 10 30 apt -y autoremove",
+                "retry 10 30 apt -y clean",
                 "sync"
             ]
         }

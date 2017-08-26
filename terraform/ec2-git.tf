@@ -22,7 +22,8 @@ resource "aws_instance" "git" {
     ]
     tags = {
         role = "git"
-        Name = "git"
+        tier = "${var.tier}"
+        Name = "git-${var.tier}"
     }
 }
 
