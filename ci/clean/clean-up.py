@@ -6,10 +6,13 @@ import sys
 ec2_resource = boto3.resource('ec2', region_name='us-west-2')
 ec2_client = boto3.client('ec2', region_name='us-west-2')
 
+ec2s = ec2_resource.instances.all()
+ec2_amis = [e.image_id for e in ec2s]
+ec2_key_pairs = [e.key_name for e in ec2s]
+
 # Deregister old AMIs.
-# TODO: do not deregister AMIs that are currently backing an EC2 instance.
-# TODO: do not deregister AMIs that are listed in carterjones-pipeline-artifacts.
 roles = ["base", "blog", "concourse", "dev", "git", "hackbox", "go-website", "pt"]
+ec2_amis = [e.image_id for e in ec2_resource.instances.all()]
 for role in roles:
     amis = list(ec2_resource.images.filter(
         Owners=["self"],
@@ -26,8 +29,10 @@ for role in roles:
     old_amis = amis[1:]
     for ami in old_amis:
         id = ami.id
-        ami.deregister()
-        print("Deregistered " + id + ".")
+        # Do not delete AMIs that are backing EC2 instances.
+        if id not in ec2_amis:
+            ami.deregister()
+            print("Deregistered " + id + ".")
 
 # Delete all EBS snapshots.
 snapshots = list(ec2_resource.snapshots.filter(OwnerIds=["self"]))
@@ -46,11 +51,11 @@ for snapshot in snapshots:
 key_pairs = list(ec2_resource.key_pairs.all())
 for kp in key_pairs:
     if kp.name.startswith("packer_") or kp.name.startswith("ssh-login-validate"):
-        # TODO: iterate over all EC2 instances and make sure that no instance is
-        # using this key pair.
         name = kp.name
-        kp.delete()
-        print("Deleted key pair " + name + ".")
+        # Do not delete key pairs that are in use by EC2 instances.
+        if name not in ec2_key_pairs:
+            kp.delete()
+            print("Deleted key pair " + name + ".")
 
 # Delete dangling security groups.
 sgs = list(ec2_resource.security_groups.all())

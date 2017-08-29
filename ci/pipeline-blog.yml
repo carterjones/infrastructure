@@ -22,11 +22,11 @@ resources:
       access_key_id: {{concourse_access_key}}
       secret_access_key: {{concourse_secret_key}}
 
-  - name: blog-final
+  - name: test-instance-data
     type: s3
     source:
       bucket: carterjones-pipeline-artifacts
-      versioned_file: blog/ami
+      versioned_file: blog/test-instance-data.tar.gz
       region_name: us-west-2
       private: true
       access_key_id: {{concourse_access_key}}
@@ -47,7 +47,6 @@ jobs:
     plan:
       - aggregate:
           - get: repo
-            trigger: true
           - get: weekly
             trigger: true
       - task: build
@@ -57,8 +56,9 @@ jobs:
           file: ami/id
 
   # Note: this simply detects that a new version of base has been built. It does
-  # not actually import the base AMI from this resource. Terraform automatically
+  # not actually import the base AMI from this resource. Packer automatically
   # grabs the latest base AMI instead.
+  # TODO: allow packer to receive a specific base AMI ID, but default to the latest.
   - name: build-from-base-change
     plan:
       - aggregate:
@@ -80,25 +80,56 @@ jobs:
         params:
           file: ami/id
 
+  - name: launch-test-instance
+    plan:
+      - get: repo
+      - get: ami-in
+        resource: blog-rc
+        trigger: true
+      - task: test
+        file: repo/ci/tasks/launch-test-instance.yml
+        params:
+          ROLE: blog
+          TIER: ci
+      - put: test-instance-data
+        params:
+          file: test-instance/data.tar.gz
+
   - name: test-login
     plan:
       - get: repo
       - get: ami-in
         resource: blog-rc
-        # passed:
-        #   - build-weekly
-        #   - build-from-base-change
-        #   - build-manual
+      - get: test-instance
+        resource: test-instance-data
+        passed: [launch-test-instance]
         trigger: true
       - task: test
-        file: repo/ci/test/ssh-login.yml
+        file: repo/ci/tasks/ssh-login.yml
         params:
           ROLE: blog
           TIER: ci
-      - put: blog-final
-        params:
-          file: ami-out/id
 
-# TODO: add ebs volume snapshot
-# TODO: add deployoment job
-# TODO: add some type of notification of success/failure
+  - name: tag-ami
+    plan:
+      - get: repo
+      - get: ami-in
+        resource: blog-rc
+        passed: [test-login]
+        trigger: true
+      - task: tag-ami
+        file: repo/ci/tasks/tag-ami.yml
+
+  - name: destroy-test-instance
+    plan:
+      - get: repo
+        passed: [test-login]
+        trigger: true
+      - task: destroy-test-instance
+        file: repo/ci/tasks/destroy-instance.yml
+        params:
+          ROLE: blog
+          TIER: ci
+
+# TODO: add job to snapshot the ebs volume
+# TODO: add job to deploy to prod

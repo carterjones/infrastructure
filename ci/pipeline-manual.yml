@@ -6,20 +6,6 @@ resources:
       branch: f/hax
 
 jobs:
-  - name: build-base
-    plan:
-      - get: repo
-#        trigger: true
-      - task: build
-        file: repo/ci/build/base.yml
-
-  - name: build-blog
-    plan:
-      - get: repo
-#        trigger: true
-      - task: build
-        file: repo/ci/build/blog.yml
-
   - name: build-concourse
     plan:
       - get: repo
@@ -33,48 +19,3 @@ jobs:
 #        trigger: true
       - task: build
         file: repo/ci/build/git.yml
-
-  - name: clean-all
-    plan:
-      - get: repo
-      - task: clean-all
-        file: repo/ci/clean/all.yml
-
-  - name: deploy-base-ci
-    plan:
-      - get: repo
-        #trigger: true
-      - task: deploy-base-ci
-        file: repo/ci/deploy/generic.yml
-        params:
-          ROLE: base
-          TIER: ci
-
-  - name: destroy-base-ci
-    plan:
-      - get: repo
-        #trigger: true
-      - task: destroy-base-ci
-        file: repo/ci/destroy/generic.yml
-        params:
-          ROLE: base
-          TIER: ci
-
-  - name: destroy-base-prod
-    plan:
-      - get: repo
-        #trigger: true
-      - task: destroy-base-prod
-        file: repo/ci/destroy/generic.yml
-        params:
-          ROLE: base
-          TIER: prod
-
-  - name: test-base
-    plan:
-      - get: repo
-      - task: test
-        file: repo/ci/test/ssh-login.yml
-        params:
-          ROLE: base
-          TIER: ci

@@ -7,15 +7,16 @@ image_resource:
 
 inputs:
   - name: repo
-  - name: ami-in
-
-outputs:
-  - name: ami-out
 
 params:
   ROLE:
   TIER:
 
+
 run:
-  path: repo/ci/test/ssh-login.sh
-  args: [base]
+  path: sh
+  args:
+    - -exc
+    - |
+      ./destroy.sh $TIER $ROLE
+  dir: repo/terraform

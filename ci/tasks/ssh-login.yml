@@ -1,0 +1,19 @@
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: carterjones/infra-builder
+
+inputs:
+  - name: repo
+  - name: ami-in
+  - name: test-instance
+
+params:
+  ROLE:
+  TIER:
+
+run:
+  path: repo/ci/tasks/ssh-login.sh
+  args: [base]

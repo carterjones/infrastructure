@@ -7,15 +7,14 @@ image_resource:
 
 inputs:
   - name: repo
+  - name: ami-in
 
 params:
   ROLE:
   TIER:
 
+outputs:
+  - name: test-instance
+
 run:
-  path: sh
-  args:
-    - -exc
-    - |
-      ./destroy.sh $TIER $ROLE
-  dir: repo/terraform
+  path: repo/ci/tasks/launch-test-instance.sh

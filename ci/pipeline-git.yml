@@ -25,4 +25,3 @@ jobs:
 
 # TODO: add ebs volume snapshot
 # TODO: add deployoment job
-# TODO: add some type of notification of success/failure

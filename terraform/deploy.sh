@@ -42,6 +42,30 @@ target_eip_association=""
 if grep 'resource "aws_eip"' "ec2-${role}.tf"; then
     target_eip="-target=aws_eip.${role}"
     target_eip_association="-target=aws_eip_association.${role}"
+
+    # There is a bug in Terraform where it won't properly update the state of an
+    # EIP that has been deleted outside of Terraform. Therefore we have to fix
+    # the state in some cases.
+
+    # Get the EIP allocation ID from the state file. This is what Terraform
+    # thinks exists. It doesn't properly update the state file to remove this
+    # EIP even if it has been deleted.
+    aws s3 cp "s3://carterjones-terraform-state-${tier}/terraform.state" "${tier}.state"
+    tf_eip_alloc_id=$(cat "${tier}.state" | jq -r '.modules[].resources."aws_eip.blog".primary.attributes.id')
+
+    # Grab the JSON data for the EIP that Terraform thinks exists.
+    real_eip_alloc_ids=$(aws ec2 describe-addresses | jq -r ".Addresses[].AllocationId")
+
+    # Determine if the TF state accurately represents the real state of EIPs.
+    if ! echo $real_eip_alloc_ids | grep $tf_eip_alloc_id; then
+        # If the EIP does not exist, elete the EIP from the state file and
+        # re-upload it to AWS.
+        echo "${tf_eip_alloc_id} does not exist. Removing from Terraform state file."
+        cat "${tier}.state" | jq 'del(.modules[].resources."aws_eip.blog")' > "new_${tier}.state"
+        aws s3 cp "new_${tier}.state" "s3://carterjones-terraform-state-${tier}/terraform.state"
+        rm "new_${tier}.state"
+        rm "${tier}.state"
+    fi
 fi
 
 # Target an IAM role if one exists in the configuration.

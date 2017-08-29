@@ -42,11 +42,20 @@ terraform init \
           -backend-config="region=${aws_region}" \
           -force-copy
 
-# Only deploy the specific EC2 instance associated with this role.
+# Destroy the specific EC2 instance associated with this role.
 terraform destroy \
           -var "aws_region=${aws_region}" \
           -var "tier=${tier}" \
           -target="aws_instance.${role}" \
           -force
+
+# If this is not prod, then destroy the EIP.
+if [[ "${tier}" != prod ]]; then
+    terraform destroy \
+          -var "aws_region=${aws_region}" \
+          -var "tier=${tier}" \
+          -target="aws_eip.${role}" \
+          -force
+fi
 
 debug
