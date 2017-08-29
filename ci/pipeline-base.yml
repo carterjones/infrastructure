@@ -33,7 +33,7 @@ resources:
       secret_access_key: {{concourse_secret_key}}
 
 jobs:
-  - name: build
+  - name: build-weekly
     plan:
       - aggregate:
           - get: repo
@@ -46,15 +46,21 @@ jobs:
         params:
           file: ami/id
 
-  - name: test
+  - name: build-manual
     plan:
       - get: repo
-        passed: [build]
-        trigger: true
+      - task: build
+        file: repo/ci/build/base.yml
+      - put: base-rc
+        params:
+          file: ami/id
+
+  - name: test-login
+    plan:
+      - get: repo
       - get: ami-in
         resource: base-rc
         trigger: true
-        passed: [build]
       - task: test
         file: repo/ci/test/ssh-login.yml
         params:

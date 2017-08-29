@@ -6,9 +6,11 @@ image_resource:
     repository: carterjones/infra-builder
 
 inputs:
-- name: repo
+  - name: repo
+
+outputs:
+  - name: ami
 
 run:
-  path: ./build.sh
+  path: repo/boxes/build.sh
   args: [blog]
-  dir: repo/boxes

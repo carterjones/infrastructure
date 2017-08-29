@@ -3,6 +3,7 @@
 debug () {
     aws s3 cp s3://carterjones-terraform-state-${tier}/terraform.state .
     cat terraform.state | jq ".modules[0].resources | keys"
+    rm terraform.state
 }
 
 usage () {

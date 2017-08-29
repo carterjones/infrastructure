@@ -28,6 +28,8 @@ resource "aws_instance" "concourse" {
     }
 }
 
+# TODO: split out the IAM roles for the EC2 instance and the concourse user.
+# TODO: make terraform control the concourse IAM user.
 data "aws_iam_policy_document" "concourse" {
     statement {
         actions = ["ec2:*"]
@@ -44,6 +46,20 @@ data "aws_iam_policy_document" "concourse" {
     statement {
         actions = ["s3:*"]
         resources = ["arn:aws:s3:::carterjones-pipeline-artifacts/*"]
+    }
+    statement {
+        actions = [
+            "iam:AttachRolePolicy",
+            "iam:CreateInstanceProfile",
+            "iam:CreatePolicy",
+            "iam:CreateRole",
+            "iam:GetInstanceProfile",
+            "iam:GetPolicy",
+            "iam:GetPolicyVersion",
+            "iam:GetRole",
+            "iam:ListAttachedRolePolicies",
+        ]
+        resources = ["*"]
     }
 }
 

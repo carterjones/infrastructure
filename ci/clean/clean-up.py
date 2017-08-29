@@ -7,7 +7,8 @@ ec2_resource = boto3.resource('ec2', region_name='us-west-2')
 ec2_client = boto3.client('ec2', region_name='us-west-2')
 
 # Deregister old AMIs.
-# TODO: do not deregister AMIs that are undergoing CI testing. find a simple way to do this.
+# TODO: do not deregister AMIs that are currently backing an EC2 instance.
+# TODO: do not deregister AMIs that are listed in carterjones-pipeline-artifacts.
 roles = ["base", "blog", "concourse", "dev", "git", "hackbox", "go-website", "pt"]
 for role in roles:
     amis = list(ec2_resource.images.filter(
@@ -41,10 +42,10 @@ for snapshot in snapshots:
             raise e
     print("Deleted " + id + ".")
 
-# Delete dangling key pairs from failed packer runs.
+# Delete dangling key pairs from failed packer/CI runs.
 key_pairs = list(ec2_resource.key_pairs.all())
 for kp in key_pairs:
-    if kp.name.startswith("packer_"):
+    if kp.name.startswith("packer_") or kp.name.startswith("ssh-login-validate"):
         # TODO: iterate over all EC2 instances and make sure that no instance is
         # using this key pair.
         name = kp.name
