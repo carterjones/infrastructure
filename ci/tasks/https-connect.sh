@@ -13,5 +13,18 @@ popd
 # We ignore the certificate because the CI cert is messed up and because we are
 # using the IP rather than a hostname. The purpose of this test is just to make
 # sure we get a 200 over HTTPS.
-retry 10 30 curl -s -I -k https://${public_ip} -H "Host: blog.carterjones.info" | grep "200 OK"
-retry 10 30 curl -s -I -k https://${public_ip} -H "Host: test.kelsey.life" | grep "200 OK"
+# Try to connect to both instances 20 times, waiting 5 seconds between retries.
+# Note: we do it this way rather than by using curl's --retry because this
+# provides much better debugging information.
+for host in blog.carterjones.info test.kelsey.life; do
+    for i in {1..20}; do
+        sleep 5
+        set +e
+        curl -I -k "https://${public_ip}" -H "Host: blog.carterjones.info" --connect-timeout 3
+        result=$?
+        set -e
+        if [[ "$result" == 0 ]]; then
+            break
+        fi
+    done
+done

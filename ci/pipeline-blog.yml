@@ -122,24 +122,30 @@ jobs:
       - task: test-https-connect
         file: repo/ci/tasks/https-connect.yml
 
-  - name: tag-ami
+  - name: tests-pass
     plan:
       - get: repo
-      - get: ami-in
-        resource: blog-rc
         passed:
           - test-ssh-login
           - test-https-connect
         trigger: true
+      - get: ami-in
+        resource: blog-rc
+
+  - name: tag-ami
+    plan:
+      - get: repo
+        passed: [tests-pass]
+        trigger: true
+      - get: ami-in
+        resource: blog-rc
       - task: tag-ami
         file: repo/ci/tasks/tag-ami.yml
 
   - name: destroy-test-instance
     plan:
       - get: repo
-        passed:
-          - test-ssh-login
-          - test-https-connect
+        passed: [tests-pass]
         trigger: true
       - task: destroy-test-instance
         file: repo/ci/tasks/destroy-instance.yml
