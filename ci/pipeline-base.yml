@@ -47,6 +47,7 @@ jobs:
     plan:
       - aggregate:
           - get: repo
+            trigger: true
           - get: weekly
             trigger: true
       - task: build
@@ -66,10 +67,11 @@ jobs:
 
   - name: launch-test-instance
     plan:
-      - get: repo
-      - get: ami-in
-        resource: base-rc
-        trigger: true
+      - aggregate:
+          - get: repo
+          - get: ami-in
+            resource: base-rc
+            trigger: true
       - task: test
         file: repo/ci/tasks/launch-test-instance.yml
         params:
@@ -81,13 +83,18 @@ jobs:
 
   - name: test-ssh-login
     plan:
-      - get: repo
-      - get: ami-in
-        resource: base-rc
-      - get: test-instance
-        resource: test-instance-data
-        passed: [launch-test-instance]
-        trigger: true
+      - aggregate:
+          - get: repo
+            passed: [launch-test-instance]
+            trigger: true
+          - get: ami-in
+            resource: base-rc
+            passed: [launch-test-instance]
+            trigger: true
+          - get: test-instance
+            resource: test-instance-data
+            passed: [launch-test-instance]
+            trigger: true
       - task: test
         file: repo/ci/tasks/ssh-login.yml
         params:
@@ -96,11 +103,14 @@ jobs:
 
   - name: tag-ami
     plan:
-      - get: repo
-      - get: ami-in
-        resource: base-rc
-        passed: [test-ssh-login]
-        trigger: true
+      - aggregate:
+          - get: repo
+            passed: [test-ssh-login]
+            trigger: true
+          - get: ami-in
+            resource: base-rc
+            passed: [test-ssh-login]
+            trigger: true
       - task: tag-ami
         file: repo/ci/tasks/tag-ami.yml
       - put: base-final
