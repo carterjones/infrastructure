@@ -95,7 +95,7 @@ jobs:
         params:
           file: test-instance/data.tar.gz
 
-  - name: test-login
+  - name: test-ssh-login
     plan:
       - get: repo
       - get: ami-in
@@ -104,18 +104,32 @@ jobs:
         resource: test-instance-data
         passed: [launch-test-instance]
         trigger: true
-      - task: test
+      - task: test-ssh-login
         file: repo/ci/tasks/ssh-login.yml
         params:
           ROLE: blog
           TIER: ci
+
+  - name: test-https-connect
+    plan:
+      - get: repo
+      - get: ami-in
+        resource: blog-rc
+      - get: test-instance
+        resource: test-instance-data
+        passed: [launch-test-instance]
+        trigger: true
+      - task: test-https-connect
+        file: repo/ci/tasks/https-connect.yml
 
   - name: tag-ami
     plan:
       - get: repo
       - get: ami-in
         resource: blog-rc
-        passed: [test-login]
+        passed:
+          - test-ssh-login
+          - test-https-connect
         trigger: true
       - task: tag-ami
         file: repo/ci/tasks/tag-ami.yml
@@ -123,7 +137,9 @@ jobs:
   - name: destroy-test-instance
     plan:
       - get: repo
-        passed: [test-login]
+        passed:
+          - test-ssh-login
+          - test-https-connect
         trigger: true
       - task: destroy-test-instance
         file: repo/ci/tasks/destroy-instance.yml

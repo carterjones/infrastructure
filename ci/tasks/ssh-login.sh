@@ -35,16 +35,7 @@ try_ssh_login () {
 }
 
 # Try to log into the instance 10 times, waiting 30 seconds between retries.
-for i in {1..10}; do
-    sleep 5
-    set +e
-    try_ssh_login
-    result=$?
-    set -e
-    if [[ "$result" == 0 ]]; then
-        break
-    fi
-done
+retry 10 30 try_ssh_login
 
 if [[ "$result" != 0 ]]; then
     echo "Unable to SSH into the system."

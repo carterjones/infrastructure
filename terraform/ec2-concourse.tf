@@ -58,6 +58,7 @@ data "aws_iam_policy_document" "concourse" {
             "iam:GetPolicyVersion",
             "iam:GetRole",
             "iam:ListAttachedRolePolicies",
+            "iam:PassRole",
         ]
         resources = ["*"]
     }

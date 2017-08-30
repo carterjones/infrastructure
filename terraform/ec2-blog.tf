@@ -10,6 +10,14 @@ data "aws_ami" "blog" {
     most_recent = true
 }
 
+data "template_file" "user_data_blog" {
+  template = <<-EOF
+             #!/bin/bash
+             /opt/carter/init-base.sh ${var.tier}
+             /opt/carter/init-blog.sh
+             EOF
+}
+
 resource "aws_instance" "blog" {
     ami           = "${data.aws_ami.blog.id}"
     availability_zone = "us-west-2b"
@@ -26,6 +34,7 @@ resource "aws_instance" "blog" {
         role = "blog"
         Name = "blog-${var.tier}"
     }
+    user_data = "${data.template_file.user_data_blog.rendered}"
 }
 
 data "aws_iam_policy_document" "blog" {
@@ -62,7 +71,6 @@ data "aws_iam_policy_document" "blog" {
             ]
         }
     }
-
 }
 
 resource "aws_iam_policy" "blog" {
@@ -81,9 +89,11 @@ resource "aws_iam_role_policy_attachment" "blog" {
     policy_arn = "${aws_iam_policy.blog.arn}"
 }
 
+# Note: use of roles rather than role is depricated. However, if we use role,
+# it doesn't actually set the role.
 resource "aws_iam_instance_profile" "blog" {
     name = "blog-${var.tier}"
-    role = "${aws_iam_role.blog.id}"
+    roles = ["${aws_iam_role.blog.id}"]
 }
 
 resource "aws_ebs_volume" "blog_state" {

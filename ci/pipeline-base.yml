@@ -79,7 +79,7 @@ jobs:
         params:
           file: test-instance/data.tar.gz
 
-  - name: test-login
+  - name: test-ssh-login
     plan:
       - get: repo
       - get: ami-in
@@ -99,7 +99,7 @@ jobs:
       - get: repo
       - get: ami-in
         resource: base-rc
-        passed: [test-login]
+        passed: [test-ssh-login]
         trigger: true
       - task: tag-ami
         file: repo/ci/tasks/tag-ami.yml
@@ -110,7 +110,7 @@ jobs:
   - name: destroy-test-instance
     plan:
       - get: repo
-        passed: [test-login]
+        passed: [test-ssh-login]
         trigger: true
       - task: destroy-test-instance
         file: repo/ci/tasks/destroy-instance.yml

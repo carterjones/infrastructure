@@ -1,5 +1,8 @@
 FROM ubuntu:latest
 
+# Add in helper file(s).
+COPY files/ /
+
 # Set up deb files.
 RUN apt-get -qq update -y && \
     apt-get -qq install -y curl awscli git jq unzip wget && \

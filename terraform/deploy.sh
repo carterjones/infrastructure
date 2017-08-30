@@ -64,16 +64,19 @@ if grep 'resource "aws_eip"' "ec2-${role}.tf"; then
         cat "${tier}.state" | jq 'del(.modules[].resources."aws_eip.blog")' > "new_${tier}.state"
         aws s3 cp "new_${tier}.state" "s3://carterjones-terraform-state-${tier}/terraform.state"
         rm "new_${tier}.state"
-        rm "${tier}.state"
     fi
+
+    rm "${tier}.state"
 fi
 
 # Target an IAM role if one exists in the configuration.
 target_iam_role=""
 target_iam_role_attachment=""
+target_iam_instance_profile=""
 if grep 'resource "aws_iam_role_policy_attachment"' "ec2-${role}.tf"; then
     target_iam_role="-target=aws_iam_policy.${role}"
     target_iam_role_attachment="-target=aws_iam_role_policy_attachment.${role}"
+    target_iam_instance_profile="-target=aws_iam_instance_profile.${role}"
 fi
 
 # Set the key name to use for SSH logins.
@@ -103,7 +106,8 @@ terraform apply \
           $target_eip \
           $target_eip_association \
           $target_iam_role \
-          $target_iam_role_attachment
+          $target_iam_role_attachment \
+          $target_iam_instance_profile
 
 # Remove the override file if it was created while running this script.
 [[ -f override.tf ]] && rm override.tf
