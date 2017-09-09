@@ -119,9 +119,14 @@ jobs:
 
   - name: destroy-test-instance
     plan:
-      - get: repo
-        passed: [test-ssh-login]
-        trigger: true
+      - aggregate:
+          - get: repo
+            passed: [test-ssh-login]
+            trigger: true
+          - get: ami-in
+            resource: base-rc
+            passed: [test-ssh-login]
+            trigger: true
       - task: destroy-test-instance
         file: repo/ci/tasks/destroy-instance.yml
         params:
