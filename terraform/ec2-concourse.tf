@@ -26,6 +26,9 @@ resource "aws_instance" "concourse" {
         tier = "${var.tier}"
         Name = "concourse-${var.tier}"
     }
+    root_block_device = {
+        volume_size = 20
+    }
 }
 
 # TODO: split out the IAM roles for the EC2 instance and the concourse user.
