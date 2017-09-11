@@ -1,10 +1,16 @@
 resources:
-  - name: repo
+  - name: repo-trading
     type: git
     source:
       uri: git@git.carterjones.info:personal/trading.git
       branch: f/app
       private_key: {{private_git_server_key}}
+
+  - name: repo-ci
+    type: git
+    source:
+      uri: https://github.com/carterjones/infrastructure
+      branch: f/hax
 
   - name: release
     type: s3
@@ -19,10 +25,12 @@ resources:
 jobs:
   - name: build
     plan:
-      - get: repo
-        trigger: yes
+      - aggregate:
+          - get: repo-trading
+            trigger: yes
+          - get: repo-ci
       - task: build
-        file: repo/ci/build/trading.yml
+        file: repo-ci/ci/build/trading.yml
       - put: release
         params:
           file: out/bundle.tar.gz

@@ -6,10 +6,11 @@ image_resource:
     repository: carterjones/infra-builder
 
 inputs:
-  - name: repo
+  - name: repo-trading
+  - name: repo-ci
 
 outputs:
   - name: out
 
 run:
-  path: repo/ci/build/trading.sh
+  path: repo-ci/ci/build/trading.sh
