@@ -2,8 +2,9 @@ resources:
   - name: repo
     type: git
     source:
-      uri: https://github.com/carterjones/infrastructure
-      branch: f/hax
+      uri: git@git.carterjones.info:personal/trading.git
+      branch: f/app
+      private_key: {{private_git_server_key}}
 
   - name: release
     type: s3
