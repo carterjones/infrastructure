@@ -41,7 +41,7 @@ is_ci && popd
 is_ci && {
     # Extract the resulting AMI if one was produced and save it to the output
     # directory.
-    produced_ami=$(tail -1 $build_log)
+    produced_ami=$(tail -2 $build_log | head -1)
     cd $(pwd)/ami
     echo $produced_ami > id
 }
