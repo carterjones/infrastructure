@@ -3,7 +3,7 @@ resources:
     type: git
     source:
       uri: https://github.com/carterjones/infrastructure
-      branch: dev
+      branch: master
 
   - name: blog-rc
     type: s3
