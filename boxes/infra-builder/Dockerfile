@@ -28,4 +28,4 @@ RUN mkdir $GOPATH
 
 # Set up gometalinter.
 RUN go get -u github.com/alecthomas/gometalinter
-RUN $GOPATH/bin/gometalinter --install &> /dev/null
+RUN $GOPATH/bin/gometalinter --install
