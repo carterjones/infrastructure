@@ -5,7 +5,7 @@ COPY files/ /
 
 # Set up software.
 RUN apk update
-RUN apk add --no-cache curl git jq make tar unzip wget
+RUN apk add --no-cache build-base curl git jq tar unzip wget
 RUN apk add aws-cli --update-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/
 
 # Set up packer and terraform.
