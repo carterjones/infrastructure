@@ -1,12 +1,11 @@
-FROM golang:alpine
+FROM golang:stretch
 
 # Add in helper file(s).
 COPY files/ /
 
 # Set up software.
-RUN apk update
-RUN apk add --no-cache build-base curl git jq tar unzip wget
-RUN apk add aws-cli --update-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/
+RUN apt-get update
+RUN apt-get install  -y awscli curl gcc git jq make tar unzip wget
 
 # Set up packer and terraform.
 WORKDIR /usr/local/bin
