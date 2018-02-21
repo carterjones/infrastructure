@@ -15,6 +15,9 @@ RUN wget -q "https://releases.hashicorp.com/terraform/0.11.3/terraform_0.11.3_li
 RUN unzip '*.zip' && rm *.zip
 RUN chmod +x packer terraform
 
-# Set up gometalinter.
+# Install gometalinter.
 RUN go get -u github.com/alecthomas/gometalinter
 RUN $GOPATH/bin/gometalinter --install
+
+# Install go dep.
+RUN go get -u github.com/golang/dep/cmd/dep
