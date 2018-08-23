@@ -4,7 +4,8 @@ RUN pacman -Syu --noconfirm \
     git \
     grep \
     lsb-release \
-    sudo
+    sudo \
+    which
 
 # Manually set the lsb-release value. This is a total hack, but it works for
 # what I need for my testing purposes.
