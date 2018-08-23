@@ -4,5 +4,4 @@ RUN pacman -Syu --noconfirm \
     git \
     grep \
     lsb-release \
-    sudo \
-    which
+    sudo
