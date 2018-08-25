@@ -7,12 +7,14 @@ jobs:
   include:
     - stage: Build and push images
       script: cd docker/arch && ./release.sh
-      env: OS=Arch
+      env: TARGET=Arch
+    - script: cd docker/infra-builder && ./release.sh
+      env: TARGET=Infra Builder
     - script: cd docker/manjaro && ./release.sh
-      env: OS=Manjaro
+      env: TARGET=Manjaro
     - script: cd docker/ubuntu-14.04 && ./release.sh
-      env: OS=Ubuntu 14.04
+      env: TARGET=Ubuntu 14.04
     - script: cd docker/ubuntu-16.04 && ./release.sh
-      env: OS=Ubuntu 16.04
+      env: TARGET=Ubuntu 16.04
     - script: cd docker/ubuntu-18.04 && ./release.sh
-      env: OS=Ubuntu 18.04
+      env: TARGET=Ubuntu 18.04
