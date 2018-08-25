@@ -18,8 +18,8 @@ RUN apt-get install -y \
 
 # Set up packer and terraform.
 WORKDIR /usr/local/bin
-RUN wget -q "https://releases.hashicorp.com/packer/1.2.3/packer_1.2.3_linux_amd64.zip"
-RUN wget -q "https://releases.hashicorp.com/terraform/0.11.7/terraform_0.11.7_linux_amd64.zip"
+RUN wget -q "https://releases.hashicorp.com/packer/1.2.5/packer_1.2.5_linux_amd64.zip"
+RUN wget -q "https://releases.hashicorp.com/terraform/0.11.8/terraform_0.11.8_linux_amd64.zip"
 RUN unzip '*.zip' && rm *.zip
 RUN chmod +x packer terraform
 
