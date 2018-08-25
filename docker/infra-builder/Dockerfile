@@ -5,7 +5,16 @@ COPY files/ /
 
 # Set up software.
 RUN apt-get update
-RUN apt-get install -y awscli curl gcc git jq make tar unzip wget
+RUN apt-get install -y \
+    awscli \
+    curl \
+    gcc \
+    git \
+    jq \
+    make \
+    tar \
+    unzip \
+    wget
 
 # Set up packer and terraform.
 WORKDIR /usr/local/bin
