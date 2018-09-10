@@ -1,4 +1,4 @@
-FROM golang:stretch
+FROM golang:1.11-stretch
 
 # Add in helper file(s).
 COPY files/ /
