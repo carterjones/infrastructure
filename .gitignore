@@ -4,6 +4,7 @@
 *.terraform
 *.vagrant
 *.venv
+*.vscode
 go-website
 packer_cache
 secrets.yml
