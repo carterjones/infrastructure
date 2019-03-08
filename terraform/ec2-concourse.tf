@@ -8,6 +8,7 @@ data "aws_ami" "concourse" {
         values = ["concourse"]
     }
     most_recent = true
+    owners      = ["self"]
 }
 
 resource "aws_instance" "concourse" {

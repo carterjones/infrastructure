@@ -11,6 +11,7 @@ data "aws_ami" "base" {
         values = ["base"]
     }
     most_recent = true
+    owners      = ["self"]
 }
 
 resource "aws_instance" "base" {

@@ -8,6 +8,7 @@ data "aws_ami" "blog" {
         values = ["blog"]
     }
     most_recent = true
+    owners      = ["self"]
 }
 
 data "template_file" "user_data_blog" {
@@ -89,11 +90,9 @@ resource "aws_iam_role_policy_attachment" "blog" {
     policy_arn = "${aws_iam_policy.blog.arn}"
 }
 
-# Note: use of roles rather than role is depricated. However, if we use role,
-# it doesn't actually set the role.
 resource "aws_iam_instance_profile" "blog" {
     name = "blog-${var.tier}"
-    roles = ["${aws_iam_role.blog.id}"]
+    role = "${aws_iam_role.blog.id}"
 }
 
 resource "aws_ebs_volume" "blog_state" {

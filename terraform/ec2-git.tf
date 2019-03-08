@@ -8,6 +8,7 @@ data "aws_ami" "git" {
         values = ["git"]
     }
     most_recent = true
+    owners      = ["self"]
 }
 
 resource "aws_instance" "git" {
