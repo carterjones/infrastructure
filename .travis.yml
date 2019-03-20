@@ -12,6 +12,8 @@ jobs:
       env: TARGET=Infra Builder
     - script: cd docker/manjaro && ./release.sh
       env: TARGET=Manjaro
+    - script: cd docker/rpm-builder && ./release.sh
+      env: TARGET=RPM Builder
     - script: cd docker/ubuntu-14.04 && ./release.sh
       env: TARGET=Ubuntu 14.04
     - script: cd docker/ubuntu-16.04 && ./release.sh
