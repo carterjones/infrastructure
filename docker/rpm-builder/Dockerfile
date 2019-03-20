@@ -5,6 +5,8 @@ RUN yum update -y
 
 # Shared requirements.
 RUN yum group install -y "Development Tools"
+RUN yum install -y \
+    rpm-build
 
 # Emacs dependencies.
 RUN yum install -y \
