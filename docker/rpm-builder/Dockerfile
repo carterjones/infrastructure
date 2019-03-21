@@ -8,6 +8,12 @@ RUN yum group install -y "Development Tools"
 RUN yum install -y \
     rpm-build
 
+# Install AWS CLI.
+COPY get-pip.py /tmp/get-pip.py
+RUN python /tmp/get-pip.py
+RUN pip install --upgrade pip
+RUN pip install awscli
+
 # Emacs dependencies.
 RUN yum install -y \
     gnutls-devel \
