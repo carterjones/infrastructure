@@ -10,6 +10,8 @@ jobs:
       env: TARGET=Arch
     - script: cd docker/infra-builder && ./release.sh
       env: TARGET=Infra Builder
+    - script: cd docker/centos-7 && ./release.sh
+      env: TARGET=CentOS 7
     - script: cd docker/manjaro && ./release.sh
       env: TARGET=Manjaro
     - script: cd docker/rpm-builder && ./release.sh
