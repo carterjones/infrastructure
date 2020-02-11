@@ -7,22 +7,22 @@ jobs:
   include:
     - stage: Build and push images
       script: cd docker/arch && ./release.sh
-      env: TARGET=Arch
+      env: TARGET=arch
     - script: cd docker/infra-builder && ./release.sh
-      env: TARGET=Infra_Builder
+      env: TARGET=infra-builder
     - script: cd docker/centos-7 && ./release.sh
-      env: TARGET=CentOS_7
+      env: TARGET=centos-7
     - script: cd docker/centos-8 && ./release.sh
       env: TARGET=centos-8
     - script: cd docker/manjaro && ./release.sh
-      env: TARGET=Manjaro
+      env: TARGET=manjaro
     - script: cd docker/rpm-builder && ./release.sh
-      env: TARGET=RPM_Builder
+      env: TARGET=rpm-builder
     - script: cd docker/ubuntu-14.04 && ./release.sh
-      env: TARGET=Ubuntu_14.04
+      env: TARGET=ubuntu-14.04
     - script: cd docker/ubuntu-16.04 && ./release.sh
-      env: TARGET=Ubuntu_16.04
+      env: TARGET=ubuntu-16.04
     - script: cd docker/ubuntu-18.04 && ./release.sh
-      env: TARGET=Ubuntu_18.04
+      env: TARGET=ubuntu-18.04
     - script: cd docker/ubuntu-18.10 && ./release.sh
-      env: TARGET=Ubuntu_18.10
+      env: TARGET=ubuntu-18.10
