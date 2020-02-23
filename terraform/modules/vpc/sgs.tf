@@ -31,6 +31,19 @@ resource "aws_security_group" "allow_all_inbound_http_and_https" {
   }
 }
 
+resource "aws_security_group" "allow_all_inbound_rdp" {
+  name        = "allow_all_inbound_rdp-${var.tier}"
+  description = "Allow RDP traffic"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    from_port   = 3389
+    to_port     = 3389
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 resource "aws_security_group" "block_egress" {
   name        = "block_egress-${var.tier}"
   description = "Block all egress."
