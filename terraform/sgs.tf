@@ -1,7 +1,7 @@
 resource "aws_security_group" "allow_all_inbound_ssh" {
     name = "allow_all_inbound_ssh-${var.tier}"
     description = "Allow all inbound SSH traffic"
-    vpc_id = "${aws_vpc.main.id}"
+    vpc_id = aws_vpc.main.id
 
     ingress {
         from_port = 22
@@ -14,7 +14,7 @@ resource "aws_security_group" "allow_all_inbound_ssh" {
 resource "aws_security_group" "allow_all_inbound_http_and_https" {
     name = "allow_all_inbound_http_and_https-${var.tier}"
     description = "Allow all inbound HTTP and HTTPS traffic"
-    vpc_id = "${aws_vpc.main.id}"
+    vpc_id = aws_vpc.main.id
 
     ingress {
         from_port = 80
@@ -34,7 +34,7 @@ resource "aws_security_group" "allow_all_inbound_http_and_https" {
 resource "aws_security_group" "block_egress" {
     name = "block_egress-${var.tier}"
     description = "Block all egress."
-    vpc_id = "${aws_vpc.main.id}"
+    vpc_id = aws_vpc.main.id
 
     egress {
         from_port = 0
@@ -47,7 +47,7 @@ resource "aws_security_group" "block_egress" {
 resource "aws_security_group" "allow_egress" {
     name = "allow_egress-${var.tier}"
     description = "Allow all egress."
-    vpc_id = "${aws_vpc.main.id}"
+    vpc_id = aws_vpc.main.id
 
     egress {
         from_port = 0

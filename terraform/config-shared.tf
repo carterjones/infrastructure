@@ -1,23 +1,24 @@
 terraform {
     backend "s3" {
-        key    = "terraform.state"
+        key = "terraform.state"
     }
 }
 
 variable "aws_region" {
-    type    = "string"
+    type    = string
     default = "us-west-2"
 }
 
 variable "tier" {
-    type = "string"
+    type    = string
+    default = "prod"
 }
 
 provider "aws" {
-    region = "${var.aws_region}"
+    region = var.aws_region
 }
 
 variable "key_name" {
-    type    = "string"
+    type    = string
     default = "primary"
 }
