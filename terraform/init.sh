@@ -5,7 +5,6 @@ usage () {
 }
 
 tier=$1
-aws_region=${2:-us-west-2}
 
 acceptable_tiers="ci dev prod"
 
@@ -18,11 +17,8 @@ fi
 
 set -euxo pipefail
 
-# Delete existing state from disk.
-rm -rf .terraform
-
 # Initialize the backend.
 terraform init \
           -backend-config="bucket=carterjones-terraform-state-${tier}" \
-          -backend-config="region=${aws_region}" \
+          -backend-config="region=us-west-2" \
           -force-copy
