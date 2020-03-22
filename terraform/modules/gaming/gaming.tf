@@ -40,9 +40,12 @@ resource "aws_spot_instance_request" "gaming" {
   tags = {
     Name = "gaming"
   }
+
+  count = var.enable
 }
 
 resource "aws_eip_association" "gaming_eip_allocation_id" {
-  instance_id   = aws_spot_instance_request.gaming.spot_instance_id
+  instance_id   = aws_spot_instance_request.gaming[count.index].spot_instance_id
   allocation_id = var.gaming_eip_allocation_id
+  count         = var.enable
 }

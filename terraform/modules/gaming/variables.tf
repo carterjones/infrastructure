@@ -13,3 +13,7 @@ variable "egress_sg_id" {
 variable "gaming_eip_allocation_id" {
   type = string
 }
+
+variable "enable" {
+  type = number
+}
