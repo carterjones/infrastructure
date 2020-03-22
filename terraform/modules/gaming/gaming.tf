@@ -26,10 +26,23 @@ resource "aws_spot_instance_request" "gaming" {
 
   # This allows me to take a snapshot of the instance and delete the
   # provisioned volume.
+  #
+  # Note: if you shut a *spot* instance down from the operating system, it will
+  # terminate the instance. The only way to prevent this is to stop spot
+  # instances from outside the OS, such as the AWS console or CLI.
   instance_initiated_shutdown_behavior = "stop"
 
   # Do not request another instance fulfilment after this instance is
   # terminated.
+  #
+  # Set this to "persistent" if you plan on stopping the instance rather than
+  # terminating it. If you try to stop an instance rather than terminating it
+  # when using a "one-time" spot_type value, you will receive the following
+  # error or something like it:
+  #
+  #   You can't stop the Spot Instance 'i-1a2b3c4d5e6f78901' because it is
+  #   associated with a one-time Spot Instance request. You can only stop Spot
+  #   Instances associated with persistent Spot Instance requests.
   spot_type = "one-time"
 
   vpc_security_group_ids = [
