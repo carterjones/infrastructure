@@ -18,10 +18,6 @@ jobs:
       env: TARGET=manjaro
     - script: cd docker/rpm-builder && ./release.sh
       env: TARGET=rpm-builder
-    - script: cd docker/ubuntu-14.04 && ./release.sh
-      env: TARGET=ubuntu-14.04
-    - script: cd docker/ubuntu-16.04 && ./release.sh
-      env: TARGET=ubuntu-16.04
     - script: cd docker/ubuntu-18.04 && ./release.sh
       env: TARGET=ubuntu-18.04
     - script: cd docker/ubuntu-20.04 && ./release.sh
