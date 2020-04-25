@@ -1,13 +1,3 @@
-data "aws_ami" "gaming" {
-  most_recent = true
-  owners      = ["self"]
-
-  filter {
-    name   = "name"
-    values = ["gaming-*"]
-  }
-}
-
 # I intentionally do not set the spot_price value because it defaults to the
 # on-demand price. Based on my experience, this means I'm paying more than the
 # average spot price. However, unless spot prices increase beyond the on-demand
@@ -17,7 +7,7 @@ resource "aws_spot_instance_request" "gaming" {
   ebs_optimized = "false"
   instance_type = "g4dn.xlarge"
   key_name      = "primary"
-  subnet_id     = var.subnet_id
+  subnet_id     = data.aws_subnet.main
 
   # Wait until the spot request is fulfilled. This should be fairly quick, so
   # if it takes a long time (minutes), then it should indicate a potential spot
@@ -46,8 +36,8 @@ resource "aws_spot_instance_request" "gaming" {
   spot_type = "one-time"
 
   vpc_security_group_ids = [
-    var.gaming_sg_id,
-    var.egress_sg_id,
+    data.aws_security_group.egress.id,
+    data.aws_security_group.inbound_rdp.id,
   ]
 
   tags = {
@@ -59,6 +49,6 @@ resource "aws_spot_instance_request" "gaming" {
 
 resource "aws_eip_association" "gaming_eip_allocation_id" {
   instance_id   = aws_spot_instance_request.gaming[count.index].spot_instance_id
-  allocation_id = var.gaming_eip_allocation_id
+  allocation_id = data.aws_eip.gaming.id
   count         = var.enable
 }
