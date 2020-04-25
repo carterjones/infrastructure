@@ -28,10 +28,3 @@ data "aws_security_group" "inbound_rdp" {
     values = ["allow_all_inbound_rdp-${var.tier}"]
   }
 }
-
-data "aws_eip" "gaming" {
-  filter {
-    name   = "tag:Name"
-    values = ["gaming"]
-  }
-}
