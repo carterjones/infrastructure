@@ -1,9 +1,9 @@
 module "gaming-prod-us-west-2" {
   source = "../modules/gaming"
-  enable = var.enable_gaming
+  enable = var.enable
   tier   = "prod"
 }
 
-variable "enable_gaming" {
+variable "enable" {
   default = 0
 }
