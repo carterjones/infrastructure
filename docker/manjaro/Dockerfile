@@ -1,4 +1,4 @@
-FROM jonathonf/manjaro:latest
+FROM manjarolinux/base:latest
 
 RUN pacman -Syu --noconfirm \
     git \
