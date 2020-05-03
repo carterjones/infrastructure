@@ -8,15 +8,15 @@ services:
 jobs:
   include:
     - stage: Build and push images
-      script: cd docker/arch && ./release.sh
+      script: cd docker && ./release.sh arch
       env: TARGET=arch
-    - script: cd docker/centos-7 && ./release.sh
+    - script: cd docker && ./release.sh centos-7
       env: TARGET=centos-7
-    - script: cd docker/centos-8 && ./release.sh
+    - script: cd docker && ./release.sh centos-8
       env: TARGET=centos-8
-    - script: cd docker/manjaro && ./release.sh
+    - script: cd docker && ./release.sh manjaro
       env: TARGET=manjaro
-    - script: cd docker/ubuntu-18.04 && ./release.sh
+    - script: cd docker && ./release.sh ubuntu-18.04
       env: TARGET=ubuntu-18.04
-    - script: cd docker/ubuntu-20.04 && ./release.sh
+    - script: cd docker && ./release.sh ubuntu-20.04
       env: TARGET=ubuntu-20.04
