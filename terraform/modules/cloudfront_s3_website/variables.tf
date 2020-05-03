@@ -1,0 +1,3 @@
+variable "fqdn" {
+  type = string
+}
