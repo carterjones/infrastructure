@@ -1,5 +1,5 @@
 resource "aws_cloudfront_distribution" "distribution" {
-  provider        = aws.us-east-1
+  provider        = aws.useast1
   aliases         = [var.fqdn]
   enabled         = true
   is_ipv6_enabled = true
@@ -57,13 +57,13 @@ resource "aws_cloudfront_distribution" "distribution" {
 }
 
 data "aws_acm_certificate" "certificate" {
-  provider = aws.us-east-1
+  provider = aws.useast1
   domain   = var.fqdn
   statuses = ["ISSUED"]
 }
 
 data "aws_s3_bucket" "bucket" {
-  provider = aws.us-west-2
+  provider = aws.uswest2
   bucket   = var.fqdn
 }
 

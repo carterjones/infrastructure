@@ -1,4 +1,4 @@
-resource "aws_cloudfront_distribution" "cdn-rei-carterjones-info" {
+resource "aws_cloudfront_distribution" "cdn_rei_carterjones_info" {
   aliases         = ["cdn.rei.carterjones.info"]
   enabled         = true
   is_ipv6_enabled = true
