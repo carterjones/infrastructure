@@ -7,6 +7,8 @@ services:
 
 jobs:
   include:
+    - stage: Lint
+      script: cd terraform && ./lint.sh
     - stage: Build and push images
       script: cd docker && ./release.sh arch
       env: TARGET=arch
