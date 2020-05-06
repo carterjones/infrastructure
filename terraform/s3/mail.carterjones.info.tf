@@ -21,7 +21,8 @@ resource "aws_s3_bucket" "mail_carterjones_info" {
 }
 
 resource "aws_s3_bucket_public_access_block" "mail_carterjones_info" {
-  bucket = "mail.carterjones.info"
+  bucket     = "mail.carterjones.info"
+  depends_on = [aws_s3_bucket.mail_carterjones_info]
 
   block_public_acls       = true
   block_public_policy     = true

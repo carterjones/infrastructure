@@ -22,7 +22,8 @@ resource "aws_s3_bucket" "resume_carterjones_info" {
 }
 
 resource "aws_s3_bucket_public_access_block" "resume_carterjones_info" {
-  bucket = "resume.carterjones.info"
+  bucket     = "resume.carterjones.info"
+  depends_on = [aws_s3_bucket.resume_carterjones_info]
 
   block_public_acls       = false
   block_public_policy     = false

@@ -22,7 +22,8 @@ resource "aws_s3_bucket" "blog_carterjones_info" {
 }
 
 resource "aws_s3_bucket_public_access_block" "blog_carterjones_info" {
-  bucket = "blog.carterjones.info"
+  bucket     = "blog.carterjones.info"
+  depends_on = [aws_s3_bucket.blog_carterjones_info]
 
   block_public_acls       = false
   block_public_policy     = false

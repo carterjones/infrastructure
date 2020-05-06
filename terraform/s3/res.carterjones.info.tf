@@ -17,7 +17,8 @@ resource "aws_s3_bucket" "res_carterjones_info" {
 }
 
 resource "aws_s3_bucket_public_access_block" "res_carterjones_info" {
-  bucket = "res.carterjones.info"
+  bucket     = "res.carterjones.info"
+  depends_on = [aws_s3_bucket.res_carterjones_info]
 
   block_public_acls       = true
   block_public_policy     = true

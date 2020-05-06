@@ -17,7 +17,8 @@ resource "aws_s3_bucket" "secure_windows_update" {
 }
 
 resource "aws_s3_bucket_public_access_block" "secure_windows_update" {
-  bucket = "secure-windows-update"
+  bucket     = "secure-windows-update"
+  depends_on = [aws_s3_bucket.secure_windows_update]
 
   block_public_acls       = false
   block_public_policy     = false

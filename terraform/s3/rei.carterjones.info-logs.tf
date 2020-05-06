@@ -17,7 +17,8 @@ resource "aws_s3_bucket" "rei_carterjones_info_logs" {
 }
 
 resource "aws_s3_bucket_public_access_block" "rei_carterjones_info_logs" {
-  bucket = "rei.carterjones.info-logs"
+  bucket     = "rei.carterjones.info-logs"
+  depends_on = [aws_s3_bucket.rei_carterjones_info_logs]
 
   block_public_acls       = true
   block_public_policy     = true

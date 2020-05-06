@@ -17,7 +17,8 @@ resource "aws_s3_bucket" "git_carterjones_info" {
 }
 
 resource "aws_s3_bucket_public_access_block" "git_carterjones_info" {
-  bucket = "git.carterjones.info"
+  bucket     = "git.carterjones.info"
+  depends_on = [aws_s3_bucket.git_carterjones_info]
 
   block_public_acls       = true
   block_public_policy     = true

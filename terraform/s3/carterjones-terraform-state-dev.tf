@@ -17,7 +17,8 @@ resource "aws_s3_bucket" "carterjones_terraform_state_dev" {
 }
 
 resource "aws_s3_bucket_public_access_block" "carterjones_terraform_state_dev" {
-  bucket = "carterjones-terraform-state-dev"
+  bucket     = "carterjones-terraform-state-dev"
+  depends_on = [aws_s3_bucket.carterjones_terraform_state_dev]
 
   block_public_acls       = true
   block_public_policy     = true

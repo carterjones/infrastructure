@@ -21,7 +21,8 @@ resource "aws_s3_bucket" "carterjones_info" {
 }
 
 resource "aws_s3_bucket_public_access_block" "carterjones_info" {
-  bucket = "carterjones.info"
+  bucket     = "carterjones.info"
+  depends_on = [aws_s3_bucket.carterjones_info]
 
   block_public_acls       = true
   block_public_policy     = true

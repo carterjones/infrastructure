@@ -17,7 +17,8 @@ resource "aws_s3_bucket" "secure_linux_update" {
 }
 
 resource "aws_s3_bucket_public_access_block" "secure_linux_update" {
-  bucket = "secure-linux-update"
+  bucket     = "secure-linux-update"
+  depends_on = [aws_s3_bucket.secure_linux_update]
 
   block_public_acls       = false
   block_public_policy     = false
