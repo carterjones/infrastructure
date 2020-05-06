@@ -1,4 +1,4 @@
-resource "aws_s3_bucket" "secure-windows-update" {
+resource "aws_s3_bucket" "secure_windows_update" {
   bucket        = "secure-windows-update"
   acl           = "private"
   force_destroy = false
@@ -16,7 +16,7 @@ resource "aws_s3_bucket" "secure-windows-update" {
   }
 }
 
-resource "aws_s3_bucket_public_access_block" "secure-windows-update" {
+resource "aws_s3_bucket_public_access_block" "secure_windows_update" {
   bucket = "secure-windows-update"
 
   block_public_acls       = false

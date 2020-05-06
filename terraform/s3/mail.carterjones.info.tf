@@ -1,4 +1,4 @@
-resource "aws_s3_bucket" "mail-carterjones-info" {
+resource "aws_s3_bucket" "mail_carterjones_info" {
   bucket        = "mail.carterjones.info"
   acl           = "private"
   force_destroy = false
@@ -20,7 +20,7 @@ resource "aws_s3_bucket" "mail-carterjones-info" {
   }
 }
 
-resource "aws_s3_bucket_public_access_block" "mail-carterjones-info" {
+resource "aws_s3_bucket_public_access_block" "mail_carterjones_info" {
   bucket = "mail.carterjones.info"
 
   block_public_acls       = true

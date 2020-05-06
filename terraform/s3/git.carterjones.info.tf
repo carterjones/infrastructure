@@ -1,4 +1,4 @@
-resource "aws_s3_bucket" "git-carterjones-info" {
+resource "aws_s3_bucket" "git_carterjones_info" {
   bucket        = "git.carterjones.info"
   acl           = "private"
   force_destroy = false
@@ -16,7 +16,7 @@ resource "aws_s3_bucket" "git-carterjones-info" {
   }
 }
 
-resource "aws_s3_bucket_public_access_block" "git-carterjones-info" {
+resource "aws_s3_bucket_public_access_block" "git_carterjones_info" {
   bucket = "git.carterjones.info"
 
   block_public_acls       = true

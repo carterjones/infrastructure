@@ -1,4 +1,4 @@
-resource "aws_s3_bucket" "rei-carterjones-info" {
+resource "aws_s3_bucket" "rei_carterjones_info" {
   bucket        = "rei.carterjones.info"
   acl           = "private"
   force_destroy = false
@@ -31,7 +31,7 @@ resource "aws_s3_bucket" "rei-carterjones-info" {
   }
 }
 
-resource "aws_s3_bucket_public_access_block" "rei-carterjones-info" {
+resource "aws_s3_bucket_public_access_block" "rei_carterjones_info" {
   bucket = "rei.carterjones.info"
 
   block_public_acls       = false

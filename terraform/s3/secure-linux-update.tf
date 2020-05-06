@@ -1,4 +1,4 @@
-resource "aws_s3_bucket" "secure-linux-update" {
+resource "aws_s3_bucket" "secure_linux_update" {
   bucket        = "secure-linux-update"
   acl           = "private"
   force_destroy = false
@@ -16,7 +16,7 @@ resource "aws_s3_bucket" "secure-linux-update" {
   }
 }
 
-resource "aws_s3_bucket_public_access_block" "secure-linux-update" {
+resource "aws_s3_bucket_public_access_block" "secure_linux_update" {
   bucket = "secure-linux-update"
 
   block_public_acls       = false

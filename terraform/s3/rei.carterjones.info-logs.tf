@@ -1,4 +1,4 @@
-resource "aws_s3_bucket" "rei-carterjones-info-logs" {
+resource "aws_s3_bucket" "rei_carterjones_info_logs" {
   bucket        = "rei.carterjones.info-logs"
   acl           = "private"
   force_destroy = false
@@ -16,7 +16,7 @@ resource "aws_s3_bucket" "rei-carterjones-info-logs" {
   }
 }
 
-resource "aws_s3_bucket_public_access_block" "rei-carterjones-info-logs" {
+resource "aws_s3_bucket_public_access_block" "rei_carterjones_info_logs" {
   bucket = "rei.carterjones.info-logs"
 
   block_public_acls       = true
@@ -25,12 +25,12 @@ resource "aws_s3_bucket_public_access_block" "rei-carterjones-info-logs" {
   restrict_public_buckets = true
 }
 
-resource "aws_s3_bucket_policy" "rei-carterjones-info-logs" {
+resource "aws_s3_bucket_policy" "rei_carterjones_info_logs" {
   bucket = "rei.carterjones.info-logs"
-  policy = data.aws_iam_policy_document.rei-carterjones-info-logs.json
+  policy = data.aws_iam_policy_document.rei_carterjones_info_logs.json
 }
 
-data "aws_iam_policy_document" "rei-carterjones-info-logs" {
+data "aws_iam_policy_document" "rei_carterjones_info_logs" {
   statement {
     effect = "Allow"
     principals {

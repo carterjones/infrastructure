@@ -1,4 +1,4 @@
-resource "aws_s3_bucket" "carterjones-terraform-state-prod" {
+resource "aws_s3_bucket" "carterjones_terraform_state_prod" {
   bucket        = "carterjones-terraform-state-prod"
   acl           = "private"
   force_destroy = false
@@ -16,7 +16,7 @@ resource "aws_s3_bucket" "carterjones-terraform-state-prod" {
   }
 }
 
-resource "aws_s3_bucket_public_access_block" "carterjones-terraform-state-prod" {
+resource "aws_s3_bucket_public_access_block" "carterjones_terraform_state_prod" {
   bucket = "carterjones-terraform-state-prod"
 
   block_public_acls       = true
