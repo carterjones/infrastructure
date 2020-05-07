@@ -14,6 +14,25 @@ resource "aws_s3_bucket" "carterjones_backup" {
   versioning {
     enabled = false
   }
+
+  lifecycle_rule {
+    enabled = true
+
+    transition {
+      days          = 30
+      storage_class = "STANDARD_IA"
+    }
+
+    transition {
+      days          = 180
+      storage_class = "GLACIER"
+    }
+
+    transition {
+      days          = 365
+      storage_class = "DEEP_ARCHIVE"
+    }
+  }
 }
 
 resource "aws_s3_bucket_public_access_block" "carterjones_backup" {
