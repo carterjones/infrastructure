@@ -1,32 +1,19 @@
-data "aws_iam_policy_document" "ec2_assume_role" {
-  statement {
-    actions = ["sts:AssumeRole"]
-
-    principals {
-      type        = "Service"
-      identifiers = ["ec2.amazonaws.com"]
-    }
-
-    effect = "Allow"
-  }
-}
-
 resource "aws_iam_group" "admins" {
   name = "admins"
 }
 
 resource "aws_iam_policy" "full_access_with_mfa" {
-  name = "full_access_with_mfa"
-  path = "/"
+  name        = "full_access_with_mfa"
+  path        = "/"
   description = "Allow all actions when using MFA."
-  policy = data.aws_iam_policy_document.full_access_with_mfa.json
+  policy      = data.aws_iam_policy_document.full_access_with_mfa.json
 }
 
 data "aws_iam_policy_document" "full_access_with_mfa" {
   statement {
-    sid = "FullAccessWithMFA"
-    effect = "Allow"
-    actions = ["*"]
+    sid       = "FullAccessWithMFA"
+    effect    = "Allow"
+    actions   = ["*"]
     resources = ["*"]
     condition {
       test     = "Bool"
