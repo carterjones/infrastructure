@@ -5,6 +5,23 @@ os: linux
 services:
   - docker
 
+before_install:
+  # Change to a workspace to avoid interferance with this repo's files/directories.
+  - pushd $(mktemp -d)
+
+  # Install tflint.
+  - curl -L "$(curl -Ls https://api.github.com/repos/terraform-linters/tflint/releases/latest | grep -o -E "https://.+?_linux_amd64.zip")" -o tflint.zip
+  - unzip tflint.zip
+  - sudo mv tflint /usr/local/bin/
+
+  # Install Terraform.
+  - wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip
+  - unzip -o terraform_*.zip
+  - sudo mv -f terraform /usr/local/bin/
+
+  # Change back to the original directory.
+  - popd
+
 jobs:
   include:
     - stage: Lint
