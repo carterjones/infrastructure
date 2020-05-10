@@ -23,7 +23,7 @@ done
 # subdirectories.
 for dir in "${non_module_dirs[@]}"; do
     pushd "${dir}" || exit 1
-    tflint
+    tflint --module
     terraform validate
     popd
 done
