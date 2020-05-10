@@ -24,9 +24,9 @@ before_install:
 
 jobs:
   include:
-    - stage: Lint
+    - stage: lint
       script: cd terraform && ./lint.sh
-    - stage: Build and push images
+    - stage: build docker images (and push on master)
       script: cd docker && ./release.sh arch
       env: TARGET=arch
     - script: cd docker && ./release.sh centos-7
