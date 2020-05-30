@@ -19,7 +19,7 @@ resource "aws_iam_group_policy_attachment" "ci_runners_list_ci_bucket" {
 resource "aws_iam_policy" "list_ci_bucket" {
   name        = "list-ci-bucket"
   path        = "/"
-  description = "Allow downloading from, uploading to, and listing the CI bucket."
+  description = "Allow listing the CI bucket."
   policy      = data.aws_iam_policy_document.list_ci_bucket.json
 }
 
@@ -28,9 +28,29 @@ data "aws_iam_policy_document" "list_ci_bucket" {
     sid    = "ListCIBucketObjects"
     effect = "Allow"
 
-    # ListBucket is the only permission required to perform a `terraform init`
-    # command when using an s3 backend.
     actions   = ["s3:ListBucket"]
     resources = ["arn:aws:s3:::carterjones-terraform-state-ci"]
+  }
+}
+
+resource "aws_iam_group_policy_attachment" "ci_runners_get_put_ci_state" {
+  group      = aws_iam_group.ci_runners.name
+  policy_arn = aws_iam_policy.get_put_ci_state.arn
+}
+
+resource "aws_iam_policy" "get_put_ci_state" {
+  name        = "get-put-ci-state"
+  path        = "/"
+  description = "Allow downloading and uploading the CI state files."
+  policy      = data.aws_iam_policy_document.get_put_ci_state.json
+}
+
+data "aws_iam_policy_document" "get_put_ci_state" {
+  statement {
+    sid    = "ListCIBucketObjects"
+    effect = "Allow"
+
+    actions   = ["s3:GetObject", "s3:PutObject"]
+    resources = ["arn:aws:s3:::carterjones-terraform-state-ci/*.state"]
   }
 }
