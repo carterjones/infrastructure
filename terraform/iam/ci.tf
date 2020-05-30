@@ -25,7 +25,7 @@ resource "aws_iam_policy" "list_ci_bucket" {
 
 data "aws_iam_policy_document" "list_ci_bucket" {
   statement {
-    sid    = "ListCIBucketObjects"
+    sid    = "ListCIBucket"
     effect = "Allow"
 
     actions   = ["s3:ListBucket"]
@@ -47,7 +47,7 @@ resource "aws_iam_policy" "get_put_ci_state" {
 
 data "aws_iam_policy_document" "get_put_ci_state" {
   statement {
-    sid    = "ListCIBucketObjects"
+    sid    = "GetPutCIStateObjects"
     effect = "Allow"
 
     actions   = ["s3:GetObject", "s3:PutObject"]
