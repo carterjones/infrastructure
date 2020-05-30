@@ -50,3 +50,11 @@ data "aws_acm_certificate" "certificate" {
 locals {
   origin_id = "s3-bucket-rei.carterjones.info"
 }
+
+output "rei_carterjones_info_distribution_domain_name" {
+  value = aws_cloudfront_distribution.cdn_rei_carterjones_info.domain_name
+}
+
+output "rei_carterjones_info_distribution_hosted_zone_id" {
+  value = aws_cloudfront_distribution.cdn_rei_carterjones_info.hosted_zone_id
+}
