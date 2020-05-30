@@ -18,6 +18,11 @@ resource "aws_acm_certificate" "mail_carterjones_info" {
   validation_method = "EMAIL"
 }
 
+resource "aws_acm_certificate" "keybase_carterjones_info" {
+  domain_name       = "keybase.carterjones.info"
+  validation_method = "EMAIL"
+}
+
 resource "aws_acm_certificate" "rei_carterjones_info" {
   domain_name       = "rei.carterjones.info"
   validation_method = "EMAIL"

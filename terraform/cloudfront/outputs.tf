@@ -14,12 +14,12 @@ output "carterjones_info_distribution_hosted_zone_id" {
   value = module.carterjones_info.distribution_hosted_zone_id
 }
 
-output "rei_carterjones_info_distribution_domain_name" {
-  value = aws_cloudfront_distribution.cdn_rei_carterjones_info.domain_name
+output "keybase_carterjones_info_distribution_domain_name" {
+  value = module.keybase_carterjones_info.distribution_domain_name
 }
 
-output "rei_carterjones_info_distribution_hosted_zone_id" {
-  value = aws_cloudfront_distribution.cdn_rei_carterjones_info.hosted_zone_id
+output "keybase_carterjones_info_distribution_hosted_zone_id" {
+  value = module.keybase_carterjones_info.distribution_hosted_zone_id
 }
 
 output "mail_carterjones_info_distribution_domain_name" {
@@ -28,6 +28,14 @@ output "mail_carterjones_info_distribution_domain_name" {
 
 output "mail_carterjones_info_distribution_hosted_zone_id" {
   value = module.mail_carterjones_info.distribution_hosted_zone_id
+}
+
+output "rei_carterjones_info_distribution_domain_name" {
+  value = aws_cloudfront_distribution.cdn_rei_carterjones_info.domain_name
+}
+
+output "rei_carterjones_info_distribution_hosted_zone_id" {
+  value = aws_cloudfront_distribution.cdn_rei_carterjones_info.hosted_zone_id
 }
 
 output "resume_carterjones_info_distribution_domain_name" {
