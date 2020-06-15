@@ -3,8 +3,6 @@
 # average spot price. However, unless spot prices increase beyond the on-demand
 # price, this will always be fulfilled.
 resource "aws_spot_instance_request" "gaming" {
-  count         = var.enable
-
   ami           = data.aws_ami.gaming.id
   ebs_optimized = "true"
   instance_type = "g4dn.xlarge"

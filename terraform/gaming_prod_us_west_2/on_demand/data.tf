@@ -11,20 +11,20 @@ data "aws_ami" "gaming" {
 data "aws_subnet" "subnet" {
   filter {
     name   = "tag:Name"
-    values = ["main-c-${var.tier}"]
+    values = ["main-b-prod"]
   }
 }
 
 data "aws_security_group" "egress" {
   filter {
     name   = "group-name"
-    values = ["allow_egress-${var.tier}"]
+    values = ["allow_egress-prod"]
   }
 }
 
 data "aws_security_group" "inbound_rdp" {
   filter {
     name   = "group-name"
-    values = ["allow_all_inbound_rdp-${var.tier}"]
+    values = ["allow_all_inbound_rdp-prod"]
   }
 }

@@ -4,7 +4,7 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    key    = "gaming-us-west-2.state"
+    key    = "gaming-us-west-2-spot.state"
     bucket = "carterjones-terraform-state-prod"
     region = "us-west-2"
   }
