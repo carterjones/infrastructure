@@ -8,10 +8,10 @@ data "aws_ami" "gaming" {
   }
 }
 
-data "aws_subnet" "main" {
+data "aws_subnet" "subnet" {
   filter {
     name   = "tag:Name"
-    values = ["main-${var.tier}"]
+    values = ["main-c-${var.tier}"]
   }
 }
 

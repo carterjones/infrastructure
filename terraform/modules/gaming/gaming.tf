@@ -9,7 +9,7 @@ resource "aws_spot_instance_request" "gaming" {
   ebs_optimized = "true"
   instance_type = "g4dn.xlarge"
   key_name      = "primary"
-  subnet_id     = data.aws_subnet.main.id
+  subnet_id     = data.aws_subnet.subnet.id
 
   # Wait until the spot request is fulfilled. This should be fairly quick, so
   # if it takes a long time (minutes), then it should indicate a potential spot
