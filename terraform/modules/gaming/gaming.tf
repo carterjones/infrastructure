@@ -6,7 +6,7 @@ resource "aws_spot_instance_request" "gaming" {
   count         = var.enable
 
   ami           = data.aws_ami.gaming.id
-  ebs_optimized = "false"
+  ebs_optimized = "true"
   instance_type = "g4dn.xlarge"
   key_name      = "primary"
   subnet_id     = data.aws_subnet.main.id
