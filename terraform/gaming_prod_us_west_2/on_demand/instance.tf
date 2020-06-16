@@ -28,3 +28,7 @@ resource "aws_instance" "gaming" {
     Name = "gaming"
   }
 }
+
+output "ip" {
+  value = aws_instance.gaming.public_ip
+}
