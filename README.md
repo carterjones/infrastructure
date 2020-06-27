@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/carterjones/infrastructure.svg?branch=main)](https://travis-ci.org/carterjones/infrastructure)
+
 # infrastructure
 
 This repository contains the code that backs the infrastructure I use for my
