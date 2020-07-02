@@ -3,5 +3,5 @@ module "resume_carterjones_info" {
   bucket_name         = "resume.carterjones.info"
   versioning_enabled  = true
   block_public_access = false
-  html_page           = "index.html"
+  html_page           = "Carter Jones - Resume.pdf"
 }
