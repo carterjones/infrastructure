@@ -1,4 +1,4 @@
-resource "aws_route53_record" "blog_a" {
+resource "aws_route53_record" "blog_carterjones_info" {
   zone_id = aws_route53_zone.carterjones_info.zone_id
   name    = "blog.carterjones.info"
   type    = "A"

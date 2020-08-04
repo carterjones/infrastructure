@@ -1,4 +1,4 @@
-resource "aws_route53_record" "root_a" {
+resource "aws_route53_record" "carterjones_info_a" {
   zone_id = aws_route53_zone.carterjones_info.zone_id
   name    = "carterjones.info"
   type    = "A"
@@ -10,7 +10,7 @@ resource "aws_route53_record" "root_a" {
   }
 }
 
-resource "aws_route53_record" "root_mx" {
+resource "aws_route53_record" "carterjones_info_mx" {
   zone_id = aws_route53_zone.carterjones_info.zone_id
   name    = "carterjones.info"
   type    = "MX"

@@ -1,4 +1,4 @@
-resource "aws_route53_record" "cdn_rei_a" {
+resource "aws_route53_record" "cdn_rei_carterjones_info" {
   zone_id = aws_route53_zone.carterjones_info.zone_id
   name    = "cdn.rei.carterjones.info"
   type    = "A"
