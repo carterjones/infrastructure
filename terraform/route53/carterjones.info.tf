@@ -14,15 +14,13 @@ resource "aws_route53_record" "carterjones_info_mx" {
   zone_id = aws_route53_zone.carterjones_info.zone_id
   name    = "carterjones.info"
   type    = "MX"
-  ttl     = 43200
+  ttl     = 3600
 
   records = [
     "1 ASPMX.L.GOOGLE.COM.",
     "5 ALT1.ASPMX.L.GOOGLE.COM.",
     "5 ALT2.ASPMX.L.GOOGLE.COM.",
-    "10 ASPMX2.GOOGLEMAIL.COM.",
-    "10 ASPMX3.GOOGLEMAIL.COM.",
-    "30 ASPMX4.GOOGLEMAIL.COM.",
-    "30 ASPMX5.GOOGLEMAIL.COM.",
+    "10 ALT3.ASPMX.L.GOOGLE.COM.",
+    "10 ALT4.ASPMX.L.GOOGLE.COM.",
   ]
 }
