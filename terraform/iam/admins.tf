@@ -1,7 +1,3 @@
-resource "aws_iam_group" "admins" {
-  name = "admins"
-}
-
 resource "aws_iam_policy" "full_access_with_mfa" {
   name        = "full_access_with_mfa"
   path        = "/"
@@ -23,7 +19,23 @@ data "aws_iam_policy_document" "full_access_with_mfa" {
   }
 }
 
-resource "aws_iam_group_policy_attachment" "admins_full_access_with_mfa" {
-  group      = aws_iam_group.admins.name
+resource "aws_iam_user" "carter" {
+  name = "carter"
+}
+
+resource "aws_iam_role" "admin" {
+  name = "admin"
+  assume_role_policy = jsonencode({
+    Statement = [{
+      Action    = "sts:AssumeRole"
+      Effect    = "Allow"
+      Principal = { AWS = aws_iam_user.carter.arn }
+    }]
+    Version = "2012-10-17"
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "admin_full_access_with_mfa" {
+  role       = aws_iam_role.admin.name
   policy_arn = aws_iam_policy.full_access_with_mfa.arn
 }
