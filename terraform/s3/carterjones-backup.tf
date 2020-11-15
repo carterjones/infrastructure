@@ -16,7 +16,8 @@ resource "aws_s3_bucket" "carterjones_backup" {
   }
 
   lifecycle_rule {
-    enabled = true
+    enabled                                = true
+    abort_incomplete_multipart_upload_days = 1
 
     transition {
       days          = 30
@@ -33,19 +34,14 @@ resource "aws_s3_bucket" "carterjones_backup" {
       storage_class = "DEEP_ARCHIVE"
     }
 
-    noncurrent_version_transition {
-      days          = 30
-      storage_class = "STANDARD_IA"
+    expiration {
+      # Delete backups after 3 years.
+      days                         = 1095
+      expired_object_delete_marker = true
     }
 
-    noncurrent_version_transition {
-      days          = 90
-      storage_class = "GLACIER"
-    }
-
-    noncurrent_version_transition {
-      days          = 180
-      storage_class = "DEEP_ARCHIVE"
+    noncurrent_version_expiration {
+      days = 1
     }
   }
 
@@ -94,7 +90,8 @@ resource "aws_s3_bucket" "carterjones_backup_replica" {
   }
 
   lifecycle_rule {
-    enabled = true
+    enabled                                = true
+    abort_incomplete_multipart_upload_days = 1
 
     transition {
       days          = 30
@@ -111,19 +108,14 @@ resource "aws_s3_bucket" "carterjones_backup_replica" {
       storage_class = "DEEP_ARCHIVE"
     }
 
-    noncurrent_version_transition {
-      days          = 30
-      storage_class = "STANDARD_IA"
+    noncurrent_version_expiration {
+      days = 1
     }
 
-    noncurrent_version_transition {
-      days          = 90
-      storage_class = "GLACIER"
-    }
-
-    noncurrent_version_transition {
-      days          = 180
-      storage_class = "DEEP_ARCHIVE"
+    expiration {
+      # Delete backups after 3 years.
+      days                         = 1095
+      expired_object_delete_marker = true
     }
   }
 }
