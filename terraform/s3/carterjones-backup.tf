@@ -25,18 +25,11 @@ resource "aws_s3_bucket" "carterjones_backup" {
     }
 
     transition {
-      days          = 180
+      days          = 60
       storage_class = "GLACIER"
     }
 
-    transition {
-      days          = 365
-      storage_class = "DEEP_ARCHIVE"
-    }
-
     expiration {
-      # Delete backups after 3 years.
-      days                         = 1095
       expired_object_delete_marker = true
     }
 
@@ -94,17 +87,7 @@ resource "aws_s3_bucket" "carterjones_backup_replica" {
     abort_incomplete_multipart_upload_days = 1
 
     transition {
-      days          = 30
-      storage_class = "STANDARD_IA"
-    }
-
-    transition {
-      days          = 90
-      storage_class = "GLACIER"
-    }
-
-    transition {
-      days          = 180
+      days          = 1
       storage_class = "DEEP_ARCHIVE"
     }
 
@@ -113,8 +96,6 @@ resource "aws_s3_bucket" "carterjones_backup_replica" {
     }
 
     expiration {
-      # Delete backups after 3 years.
-      days                         = 1095
       expired_object_delete_marker = true
     }
   }
