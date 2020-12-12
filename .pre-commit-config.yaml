@@ -1,0 +1,7 @@
+repos:
+- repo: https://github.com/antonbabenko/pre-commit-terraform
+  rev: HEAD
+  hooks:
+    - id: terraform_fmt
+    - id: terraform_tflint
+    # - id: terraform_tfsec
