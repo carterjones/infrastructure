@@ -9,7 +9,7 @@ data "aws_iam_policy_document" "full_access_with_mfa" {
   statement {
     sid       = "FullAccessWithMFA"
     effect    = "Allow"
-    actions   = ["*"]
+    actions   = ["*"] #tfsec:ignore:AWS046 Admins should be able to do anything here.
     resources = ["*"]
     condition {
       test     = "Bool"

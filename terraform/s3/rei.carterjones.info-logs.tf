@@ -1,3 +1,4 @@
+#tfsec:ignore:AWS002 I'm cheap and don't want to pay for storing logs of log buckets.
 resource "aws_s3_bucket" "rei_carterjones_info_logs" {
   bucket        = "rei.carterjones.info-logs"
   acl           = "private"

@@ -1,3 +1,4 @@
+#tfsec:ignore:AWS002 I'm cheap and don't want to pay for storing logs.
 resource "aws_s3_bucket" "bucket" {
   bucket        = var.bucket_name
   acl           = var.canned_acl

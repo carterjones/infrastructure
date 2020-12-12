@@ -7,7 +7,7 @@ resource "aws_security_group" "allow_all_inbound_ssh" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"] #tfsec:ignore:AWS008 I'm too cheap to pay for a VPN for ingress.
   }
 }
 
@@ -20,14 +20,14 @@ resource "aws_security_group" "allow_all_inbound_http_and_https" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"] #tfsec:ignore:AWS008 Web traffic is useful when it can be accessed.
   }
 
   ingress {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"] #tfsec:ignore:AWS008 Web traffic is useful when it can be accessed.
   }
 }
 
@@ -40,7 +40,7 @@ resource "aws_security_group" "allow_all_inbound_rdp" {
     from_port   = 3389
     to_port     = 3389
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"] #tfsec:ignore:AWS008 I'm too cheap to pay for a VPN for ingress.
   }
 }
 
@@ -66,6 +66,6 @@ resource "aws_security_group" "allow_egress" {
     from_port   = 0
     to_port     = 0
     protocol    = -1
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"] #tfsec:ignore:AWS009 The whole point of this SG is to allow egress.
   }
 }

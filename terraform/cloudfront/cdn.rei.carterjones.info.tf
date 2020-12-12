@@ -1,3 +1,4 @@
+#tfsec:ignore:AWS045 I'm cheap and don't want to pay for a WAF.
 resource "aws_cloudfront_distribution" "cdn_rei_carterjones_info" {
   aliases         = ["cdn.rei.carterjones.info"]
   enabled         = true

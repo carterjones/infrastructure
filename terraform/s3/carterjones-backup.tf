@@ -1,3 +1,4 @@
+#tfsec:ignore:AWS002 I'm cheap and don't want to pay for storing logs.
 resource "aws_s3_bucket" "carterjones_backup" {
   bucket        = "carterjones-backup"
   acl           = "private"
@@ -63,6 +64,7 @@ resource "aws_s3_bucket_public_access_block" "carterjones_backup" {
   restrict_public_buckets = true
 }
 
+#tfsec:ignore:AWS002 I'm cheap and don't want to pay for storing logs.
 resource "aws_s3_bucket" "carterjones_backup_replica" {
   provider = aws.useast1
 

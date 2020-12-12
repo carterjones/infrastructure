@@ -1,3 +1,4 @@
+#tfsec:ignore:AWS045 I'm cheap and don't want to pay for a WAF.
 resource "aws_cloudfront_distribution" "distribution" {
   provider        = aws.useast1
   aliases         = [var.fqdn]
