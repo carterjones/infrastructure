@@ -8,7 +8,7 @@ resource "aws_instance" "gaming" {
   # Use provisioned IOPS storage to increase hard drive performance.
   root_block_device {
     volume_type = "io1"
-    iops = "7500"
+    iops        = "7500"
   }
 
   # This allows me to take a snapshot of the instance and delete the
