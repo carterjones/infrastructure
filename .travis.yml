@@ -15,8 +15,8 @@ before_install:
   - sudo mv tflint /usr/local/bin/
 
   # Install Terraform.
-  - wget https://releases.hashicorp.com/terraform/0.12.29/terraform_0.12.29_linux_amd64.zip
-  - unzip -o terraform_*.zip
+  - curl -o terraform.zip https://releases.hashicorp.com/terraform/0.12.29/terraform_0.12.29_linux_amd64.zip
+  - unzip -o terraform.zip
   - sudo mv -f terraform /usr/local/bin/
 
   # Change back to the original directory.
