@@ -14,6 +14,7 @@ resource "aws_api_gateway_domain_name" "rei_carterjones_info" {
   provider        = aws.uswest2
   domain_name     = "rei.carterjones.info"
   certificate_arn = data.aws_acm_certificate.rei_carterjones_info.arn
+  security_policy = "TLS_1_2"
 }
 
 data "aws_acm_certificate" "rei_carterjones_info" {
