@@ -1,0 +1,21 @@
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: HEAD
+  hooks:
+    - id: check-yaml
+    - id: end-of-file-fixer
+    - id: trailing-whitespace
+- repo: https://github.com/gruntwork-io/pre-commit
+  rev: HEAD
+  hooks:
+    - id: shellcheck
+- repo: https://github.com/antonbabenko/pre-commit-terraform
+  rev: HEAD
+  hooks:
+    - id: terraform_fmt
+    - id: terraform_tflint
+    - id: terraform_tfsec
+- repo: https://github.com/golangci/golangci-lint
+  rev: HEAD
+  hooks:
+    - id: golangci-lint

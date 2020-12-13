@@ -1,0 +1,52 @@
+# Prepare images with statically linked binaries.
+FROM golang:alpine AS golang
+FROM golangci/golangci-lint:latest AS golangci-lint
+FROM koalaman/shellcheck:stable AS shellcheck
+FROM hashicorp/terraform:latest AS terraform
+FROM liamg/tfsec:latest AS tfsec
+
+# Create a statically linked version of tfsec. The Docker image produced by wata727/tflint is not
+# statically linked.
+FROM golang:alpine AS tflint
+RUN apk add --no-cache \
+    build-base \
+    curl \
+    git
+RUN /bin/sh -c 'cd /bin && curl -L "$(curl -Ls https://api.github.com/repos/terraform-linters/tflint/releases/latest | grep -o -E "https://.+?_linux_amd64.zip")" -o tflint.zip && unzip tflint.zip && rm tflint.zip'
+
+# Create the final image.
+FROM golang:alpine
+
+# Install dependencies.
+RUN apk add --update --no-cache \
+    bash \
+    build-base \
+    git \
+    python3 \
+    python3-dev
+RUN python3 -m ensurepip
+
+# Install pre-commit.
+RUN pip3 install pre-commit
+
+# Copy statically linked binaries from other Docker images.
+COPY --from=golang /usr/local/go/bin/go /bin/go
+COPY --from=golangci-lint /usr/bin/golangci-lint /bin/golangci-lint
+COPY --from=shellcheck /bin/shellcheck /bin/shellcheck
+COPY --from=terraform /bin/terraform /bin/terraform
+COPY --from=tflint /bin/tflint /bin/tflint
+COPY --from=tfsec /usr/bin/tfsec /bin/tfsec
+
+# Initialize some pre-commit hooks used in my repositories. This saves various files to
+# /root/.cache/pre-commit so that it saves time when running pre-commit in the future during CI.
+RUN mkdir /tmp/pre-commit-initialize
+COPY .pre-commit-config.yaml.shared /tmp/pre-commit-initialize/.pre-commit-config.yaml
+RUN cd /tmp/pre-commit-initialize && \
+    git init && \
+    pre-commit install --install-hooks && \
+    cd .. && \
+    rm -rf /tmp/pre-commit-initialize
+
+# Configure how the container will run.
+VOLUME /code
+WORKDIR /code

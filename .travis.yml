@@ -27,7 +27,9 @@ jobs:
     - stage: lint
       script: cd terraform && ./lint.sh
     - stage: build docker images (and push on main)
-      script: cd docker && ./release.sh arch
+      script: cd docker && ./release.sh ci-runner
+      env: TARGET=ci-runner
+    - script: cd docker && ./release.sh arch
       env: TARGET=arch
     - script: cd docker && ./release.sh centos-7
       env: TARGET=centos-7
