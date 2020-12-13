@@ -7,12 +7,13 @@ if [[ -z "${1}" ]]; then
 fi
 
 image="${1}"
+git_hash=$(git rev-parse --verify HEAD)
 
 docker build -f "Dockerfile.${image}" -t "carterjones/${image}:latest" .
-docker tag "carterjones/${image}:latest" "carterjones/${image}:${TRAVIS_COMMIT}"
+docker tag "carterjones/${image}:latest" "carterjones/${image}:${git_hash}"
 
-if [[ "${TRAVIS_BRANCH}" == "main" ]]; then
+if [[ $(git branch --show-current) == "main" ]]; then
     docker login -u "${DOCKERHUB_USERNAME}" -p "${DOCKERHUB_PASSWORD}"
-    docker push "carterjones/${image}:${TRAVIS_COMMIT}"
+    docker push "carterjones/${image}:${git_hash}"
     docker push "carterjones/${image}:latest"
 fi
