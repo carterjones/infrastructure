@@ -22,7 +22,6 @@ docker_builder:
       - NAME: centos-7
       - NAME: centos-8
       - NAME: manjaro
-      - NAME: ubuntu-18.04
       - NAME: ubuntu-20.04
   matrix:
     - name: build ${NAME} (and push when on main branch)
