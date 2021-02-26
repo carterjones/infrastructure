@@ -1,0 +1,37 @@
+name: lint/build (and push on main)
+
+on: push
+
+jobs:
+  lint-pre-commit:
+    container:
+      image: carterjones/ci-runner:latest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: pre-commit run --all
+
+  lint-terraform:
+    container:
+      image: carterjones/ci-runner:latest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd terraform && ./lint.sh
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+  build-and-push:
+    runs-on: ubuntu-latest
+    needs: lint-pre-commit
+    strategy:
+      matrix:
+        os: ["ci-runner", "arch", "centos-7", "centos-8", "manjaro", "ubuntu-20.04"]
+    steps:
+      - uses: actions/checkout@v2
+      - name: build ${{ matrix.os }} (and push when on main branch)
+        run: cd docker && ./release.sh ${{ matrix.os }}
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
