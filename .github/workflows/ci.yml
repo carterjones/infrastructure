@@ -9,7 +9,7 @@ jobs:
   lint-pre-commit:
     container:
       image: carterjones/ci-runner:latest
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - run: pre-commit run --all
@@ -17,7 +17,7 @@ jobs:
   lint-terraform:
     container:
       image: carterjones/ci-runner:latest
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - run: cd terraform && ./lint.sh
@@ -26,7 +26,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   build-and-push:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs: lint-pre-commit
     strategy:
       matrix:
