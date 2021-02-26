@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/carterjones/infrastructure.svg?branch=main)](https://travis-ci.org/carterjones/infrastructure)
+![Build Status](https://github.com/carterjones/infrastructure/actions/workflows/ci.yml/badge.svg)
 [![Maintainability](https://api.codeclimate.com/v1/badges/b980b0a6b0881faa9f4f/maintainability)](https://codeclimate.com/github/carterjones/infrastructure/maintainability)
 
 # infrastructure
