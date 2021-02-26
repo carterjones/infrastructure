@@ -1,6 +1,9 @@
 name: lint/build (and push on main)
 
-on: push
+on:
+  push:
+  schedule:
+    - cron: '0 * * * 1'
 
 jobs:
   lint-pre-commit:
