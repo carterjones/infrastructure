@@ -1,6 +1,7 @@
 name: lint/build (and push on main)
 
 on:
+  pull_request:
   push:
   schedule:
     - cron: '0 * * * 1'
