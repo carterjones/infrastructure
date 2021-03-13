@@ -29,12 +29,12 @@ module "admins_group" {
 data "aws_iam_policy_document" "role_assume_role_policy" {
   statement {
     actions = ["sts:AssumeRole"]
-    # only allow folks in this account
+    # Only allow users in this account to use this policy.
     principals {
       type        = "AWS"
       identifiers = [data.aws_caller_identity.current.account_id]
     }
-    # require MFA
+    # Require MFA.
     condition {
       test     = "Bool"
       variable = "aws:MultiFactorAuthPresent"
@@ -55,4 +55,26 @@ resource "aws_iam_role" "admin" {
 resource "aws_iam_role_policy_attachment" "admin_administrator_access" {
   role       = aws_iam_role.admin.name
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
+}
+
+# Allow the admin role to access the org_id account.
+data "aws_iam_policy_document" "org_id_cross_account_access" {
+  statement {
+    actions = ["sts:AssumeRole"]
+    resources = [
+      "arn:aws:iam::${aws_organizations_account.org_id.id}:role/OrganizationAccountAccessRole",
+    ]
+  }
+}
+
+resource "aws_iam_policy" "org_id_cross_account_access" {
+  name        = "org-id-cross-account-access"
+  path        = "/"
+  description = "Allow cross-account access to the ${aws_organizations_account.org_id.id} account."
+  policy      = data.aws_iam_policy_document.org_id_cross_account_access.json
+}
+
+resource "aws_iam_role_policy_attachment" "org_id_cross_account_access" {
+  role       = aws_iam_role.admin.name
+  policy_arn = aws_iam_policy.org_id_cross_account_access.arn
 }
