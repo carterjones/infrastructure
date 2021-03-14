@@ -8,11 +8,6 @@ resource "aws_acm_certificate" "carterjones_info" {
   validation_method = "EMAIL"
 }
 
-resource "aws_acm_certificate" "cdn_rei_carterjones_info" {
-  domain_name       = "cdn.rei.carterjones.info"
-  validation_method = "EMAIL"
-}
-
 resource "aws_acm_certificate" "mail_carterjones_info" {
   domain_name       = "mail.carterjones.info"
   validation_method = "EMAIL"
@@ -25,11 +20,6 @@ resource "aws_acm_certificate" "keybase_carterjones_info" {
 
 resource "aws_acm_certificate" "public_carterjones_info" {
   domain_name       = "public.carterjones.info"
-  validation_method = "EMAIL"
-}
-
-resource "aws_acm_certificate" "rei_carterjones_info" {
-  domain_name       = "rei.carterjones.info"
   validation_method = "EMAIL"
 }
 
