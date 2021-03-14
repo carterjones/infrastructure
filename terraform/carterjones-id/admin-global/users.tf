@@ -86,7 +86,7 @@ module "infra_group" {
     "arn:aws:iam::${var.account_id_infra}:role/infra",
     "arn:aws:iam::${var.account_id_org_root}:role/billing",
     # "arn:aws:iam::${var.account_id_sandbox}:role/infra",
-    # "arn:aws:iam::${var.account_id_prod}:role/infra",
+    "arn:aws:iam::${var.account_id_prod}:role/infra",
   ]
   group_name = "infra"
 }
@@ -110,7 +110,7 @@ module "engineers_group" {
   allowed_roles = [
     aws_iam_role.engineer.arn,
     # "arn:aws:iam::${var.account_id_sandbox}:role/engineer",
-    # "arn:aws:iam::${var.account_id_prod}:role/engineer",
+    "arn:aws:iam::${var.account_id_prod}:role/engineer",
   ]
   group_name = "engineer"
 }
