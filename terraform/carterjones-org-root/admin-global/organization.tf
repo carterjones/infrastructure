@@ -56,6 +56,28 @@ resource "aws_organizations_account" "org_infra" {
   }
 }
 
+resource "aws_organizations_account" "org_prod" {
+  name      = "carterjones-prod"
+  email     = "${var.email_username}+aws-org-prod@${var.email_domain}"
+  parent_id = aws_organizations_organizational_unit.carterjones.id
+
+  iam_user_access_to_billing = "DENY"
+  tags = {
+    Automation = "Terraform"
+  }
+
+  # This account was imported, so when Terraform sees either ALLOW or DENY for
+  # iam_user_access_to_billing, it wants to recreate the account, because there
+  # is no AWS Organizations API for reading iam_user_access_to_billing. See
+  # https://github.com/hashicorp/terraform-provider-aws/issues/12959 for more
+  # details.
+  #
+  # Therefore use this workaround. Last updated 2021-03-13.
+  lifecycle {
+    ignore_changes = [iam_user_access_to_billing]
+  }
+}
+
 # Outputs
 
 output "aws_organizations_account_org_id_id" {
@@ -66,4 +88,9 @@ output "aws_organizations_account_org_id_id" {
 output "aws_organizations_account_org_infra_id" {
   description = "ID for the carterjones infra account"
   value       = aws_organizations_account.org_infra.id
+}
+
+output "aws_organizations_account_org_prod_id" {
+  description = "ID for the carterjones prod account"
+  value       = aws_organizations_account.org_prod.id
 }
