@@ -1,9 +1,0 @@
-[Unit]
-Description=go-website
-
-[Service]
-TimeoutStartSec=0
-ExecStart=/bin/bash -c "cd /home/ubuntu; exec sudo -H -u www-data ./go-website"
-
-[Install]
-WantedBy=multi-user.target

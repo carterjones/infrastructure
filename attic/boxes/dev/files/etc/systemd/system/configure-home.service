@@ -1,9 +1,0 @@
-[Unit]
-Description=Configure the /home directory.
-
-[Service]
-TimeoutStartSec=0
-ExecStart=/bin/bash /opt/carter/bin/init-dev.sh
-
-[Install]
-WantedBy=multi-user.target

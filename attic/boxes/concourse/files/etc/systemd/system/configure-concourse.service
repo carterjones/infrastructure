@@ -1,9 +1,0 @@
-[Unit]
-Description=Configure the concourse settings
-
-[Service]
-User=root
-ExecStart=/bin/bash /opt/carter/configure-concourse.sh
-
-[Install]
-WantedBy=multi-user.target

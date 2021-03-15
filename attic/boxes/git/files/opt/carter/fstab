@@ -1,2 +1,0 @@
-LABEL=cloudimg-rootfs /         ext4   defaults,discard                                                          0 0
-/dev/xvdb             /mnt/data auto   defaults,nofail,x-systemd.requires=cloud-init.service,comment=cloudconfig 0 2
