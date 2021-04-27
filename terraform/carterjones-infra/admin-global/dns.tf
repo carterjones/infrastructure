@@ -48,12 +48,60 @@ resource "aws_route53_record" "carterjones_info_mx" {
   ttl     = 3600
 
   records = [
-    "1 ASPMX.L.GOOGLE.COM.",
-    "5 ALT1.ASPMX.L.GOOGLE.COM.",
-    "5 ALT2.ASPMX.L.GOOGLE.COM.",
-    "10 ALT3.ASPMX.L.GOOGLE.COM.",
-    "10 ALT4.ASPMX.L.GOOGLE.COM.",
+    "10 mail.protonmail.ch.",
+    "20 mailsec.protonmail.ch.",
   ]
+}
+
+resource "aws_route53_record" "carterjones_info_txt_protonmail" {
+  zone_id = aws_route53_zone.carterjones_info.zone_id
+  name    = "carterjones.info"
+  type    = "TXT"
+  ttl     = 3600
+  records = [
+    "protonmail-verification=899925db5737132194d21148d8cf7d7445bd5275",
+    "v=spf1 include:_spf.protonmail.ch mx ~all",
+  ]
+}
+
+resource "aws_route53_record" "carterjones_info_dmarc" {
+  zone_id = aws_route53_zone.carterjones_info.zone_id
+  name    = "_dmarc.carterjones.info"
+  type    = "TXT"
+  ttl     = 3600
+  records = [
+    "v=DMARC1; p=none",
+  ]
+}
+
+resource "aws_route53_record" "carterjones_info_dkim1" {
+  zone_id = aws_route53_zone.carterjones_info.zone_id
+  name    = "protonmail._domainkey.carterjones.info"
+  type    = "CNAME"
+  records = [
+    "protonmail.domainkey.ddd22q4jtadwip3fbvp43dv5iokimcahazdp4vk6e3srebrf4qpfq.domains.proton.ch.",
+  ]
+  ttl = 3600
+}
+
+resource "aws_route53_record" "carterjones_info_dkim2" {
+  zone_id = aws_route53_zone.carterjones_info.zone_id
+  name    = "protonmail2._domainkey.carterjones.info"
+  type    = "CNAME"
+  records = [
+    "protonmail2.domainkey.ddd22q4jtadwip3fbvp43dv5iokimcahazdp4vk6e3srebrf4qpfq.domains.proton.ch.",
+  ]
+  ttl = 3600
+}
+
+resource "aws_route53_record" "carterjones_info_dkim3" {
+  zone_id = aws_route53_zone.carterjones_info.zone_id
+  name    = "protonmail3._domainkey.carterjones.info"
+  type    = "CNAME"
+  records = [
+    "protonmail3.domainkey.ddd22q4jtadwip3fbvp43dv5iokimcahazdp4vk6e3srebrf4qpfq.domains.proton.ch.",
+  ]
+  ttl = 3600
 }
 
 resource "aws_route53_record" "blog_carterjones_info" {
