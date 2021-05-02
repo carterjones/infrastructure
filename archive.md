@@ -9,6 +9,8 @@ searching through git history to find what I am looking for.
 
 ## Configurations
 
+- arch
+  - [docker](https://github.com/carterjones/infrastructure/blob/0cb77666fc65c4a33c37b651b699a97175c7b3d5/docker/Dockerfile.arch)
 - base
   - [ec2 - terraform](https://github.com/carterjones/infrastructure/blob/8422f5506aee80a993eae994bf3fe01b65faa5d4/attic/terraform/ec2-base.tf)
   - [packer](https://github.com/carterjones/infrastructure/tree/55eced88a56fff2cf93aac7ee4f76bb6c5f700ac/attic/boxes/base)
