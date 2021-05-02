@@ -1,5 +1,5 @@
-![Build Status](https://github.com/carterjones/infrastructure/actions/workflows/ci.yml/badge.svg)
-[![Maintainability](https://api.codeclimate.com/v1/badges/b980b0a6b0881faa9f4f/maintainability)](https://codeclimate.com/github/carterjones/infrastructure/maintainability)
+[![lint/build/push](https://github.com/carterjones/infrastructure/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/carterjones/infrastructure/actions/workflows/ci.yml?query=branch%3Amain)
+[![maintainability](https://api.codeclimate.com/v1/badges/b980b0a6b0881faa9f4f/maintainability)](https://codeclimate.com/github/carterjones/infrastructure/maintainability)
 
 # infrastructure
 
