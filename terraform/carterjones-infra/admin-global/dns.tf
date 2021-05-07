@@ -70,7 +70,7 @@ resource "aws_route53_record" "carterjones_info_dmarc" {
   type    = "TXT"
   ttl     = 3600
   records = [
-    "v=DMARC1; p=none; rua=mailto:ypzqn2df@ag.dmarcian.com;",
+    "v=DMARC1; p=reject; pct=100; rua=mailto:ypzqn2df@ag.dmarcian.com;",
   ]
 }
 
