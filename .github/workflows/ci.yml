@@ -12,7 +12,7 @@ jobs:
       image: carterjones/ci-runner:latest
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
       - run: pre-commit run --all
 
   lint-terraform:
@@ -20,7 +20,7 @@ jobs:
       image: carterjones/ci-runner:latest
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
       - run: cd terraform && ./lint.sh
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -33,7 +33,7 @@ jobs:
       matrix:
         os: ["ci-runner", "centos-7", "centos-8", "manjaro", "ubuntu-20.04"]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
       - name: build ${{ matrix.os }} (and push when on main branch)
         run: cd docker && ./release.sh ${{ matrix.os }}
         env:
