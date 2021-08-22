@@ -21,7 +21,7 @@ module "ec2_cluster" {
 
   ami                    = data.aws_ami.ubuntu_20_04.id
   instance_type          = "m5.large"
-  key_name               = "yubikey-5c"
+  key_name               = "ec2-us-west-2"
   monitoring             = true
   vpc_security_group_ids = [aws_security_group.downloaders.id]
   subnet_id              = module.vpc.public_subnets[0]
