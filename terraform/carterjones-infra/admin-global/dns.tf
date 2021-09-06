@@ -151,3 +151,61 @@ resource "aws_route53_record" "www_carterjones_info" {
   records = ["www.prod.carterjones.info"]
   ttl     = 3600
 }
+
+# ACM validation records.
+
+resource "aws_route53_record" "blog_carterjones_info_acm" {
+  zone_id = aws_route53_zone.carterjones_info.zone_id
+  name    = "_6b33d83f44143cbfd7029e9d54394f5a.blog.carterjones.info."
+  type    = "CNAME"
+  records = ["_b41fba7f7a20923f6283651752d26702.lkwmzfhcjn.acm-validations.aws."]
+  ttl     = 60
+}
+
+resource "aws_route53_record" "carterjones_info_dns_validation" {
+  zone_id = aws_route53_zone.carterjones_info.zone_id
+  name    = "_668c8cb47c168219a61e0701b90ff8fa.carterjones.info."
+  type    = "CNAME"
+  records = ["_543a0c3c0ee64dd49e42ae9d7f3adad6.lkwmzfhcjn.acm-validations.aws."]
+  ttl     = 60
+}
+
+resource "aws_route53_record" "keybase_carterjones_info_dns_validation" {
+  zone_id = aws_route53_zone.carterjones_info.zone_id
+  name    = "_9bdd3608960cb2c68500805e749fe2f4.keybase.carterjones.info."
+  type    = "CNAME"
+  records = ["_0deb8ff079549c3125101c0f3abe046c.lkwmzfhcjn.acm-validations.aws."]
+  ttl     = 60
+}
+
+resource "aws_route53_record" "mail_carterjones_info_dns_validation" {
+  zone_id = aws_route53_zone.carterjones_info.zone_id
+  name    = "_adbb8550810052758a1311fd62ba882c.mail.carterjones.info."
+  type    = "CNAME"
+  records = ["_427c13d3066f3a835c8610111e2c1e7a.lkwmzfhcjn.acm-validations.aws."]
+  ttl     = 60
+}
+
+resource "aws_route53_record" "public_carterjones_info_dns_validation" {
+  zone_id = aws_route53_zone.carterjones_info.zone_id
+  name    = "_199dd41d4fbcec45974ab9d7bb2fb74a.public.carterjones.info."
+  type    = "CNAME"
+  records = ["_82a8c22d4a1b6acfbb562788d5ae71c9.lkwmzfhcjn.acm-validations.aws."]
+  ttl     = 60
+}
+
+resource "aws_route53_record" "resume_carterjones_info_dns_validation" {
+  zone_id = aws_route53_zone.carterjones_info.zone_id
+  name    = "_5b736b9fa9f53b84c4edef29e9558ab8.resume.carterjones.info."
+  type    = "CNAME"
+  records = ["_6b9767250ee7d1e01c07722bc69f7d49.lkwmzfhcjn.acm-validations.aws."]
+  ttl     = 60
+}
+
+resource "aws_route53_record" "www_carterjones_info_dns_validation" {
+  zone_id = aws_route53_zone.carterjones_info.zone_id
+  name    = "_3a9cee763740ef90c527fdff762f486b.www.carterjones.info."
+  type    = "CNAME"
+  records = ["_e0f2f56b3e4ee858e4aa4abd3e93764a.lkwmzfhcjn.acm-validations.aws."]
+  ttl     = 60
+}

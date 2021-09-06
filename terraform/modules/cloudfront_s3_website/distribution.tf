@@ -58,9 +58,10 @@ resource "aws_cloudfront_distribution" "distribution" {
 }
 
 data "aws_acm_certificate" "certificate" {
-  provider = aws.useast1
-  domain   = var.fqdn
-  statuses = ["ISSUED"]
+  provider    = aws.useast1
+  domain      = var.fqdn
+  statuses    = ["ISSUED"]
+  most_recent = true
 }
 
 data "aws_s3_bucket" "bucket" {
