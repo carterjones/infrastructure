@@ -2,6 +2,7 @@ data "http" "my_ip" {
   url = "https://icanhazip.com"
 }
 
+# tfsec:ignore:aws-vpc-no-public-egress-sg
 resource "aws_security_group" "downloaders" {
   name        = "downloaders"
   description = "allow downloaders ingress and egress"
@@ -19,7 +20,8 @@ resource "aws_security_group" "downloaders" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"] #tfsec:ignore:AWS009
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow full egress to the world."
   }
 
   tags = {

@@ -1,4 +1,4 @@
-#tfsec:ignore:AWS002 I'm cheap and don't want to pay for storing logs.
+# tfsec:ignore:aws-s3-enable-bucket-logging
 resource "aws_s3_bucket" "bucket" {
   bucket        = var.bucket_name
   acl           = var.canned_acl
@@ -12,6 +12,7 @@ resource "aws_s3_bucket" "bucket" {
     }
   }
 
+  # tfsec:ignore:aws-s3-enable-versioning
   versioning {
     enabled = var.versioning_enabled
   }
@@ -34,9 +35,12 @@ resource "aws_s3_bucket" "bucket" {
   }
 }
 
+# tfsec:ignore:aws-s3-block-public-acls
+# tfsec:ignore:aws-s3-block-public-policy
+# tfsec:ignore:aws-s3-ignore-public-acls
+# tfsec:ignore:aws-s3-no-public-buckets
 resource "aws_s3_bucket_public_access_block" "bucket" {
-  bucket     = var.bucket_name
-  depends_on = [aws_s3_bucket.bucket]
+  bucket = aws_s3_bucket.bucket.id
 
   block_public_acls       = var.block_public_access
   block_public_policy     = var.block_public_access

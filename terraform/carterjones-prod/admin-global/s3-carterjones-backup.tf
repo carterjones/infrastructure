@@ -1,4 +1,5 @@
-#tfsec:ignore:AWS002 I'm cheap and don't want to pay for storing logs.
+# tfsec:ignore:aws-s3-enable-bucket-logging
+# tfsec:ignore:aws-s3-specify-public-access-block
 resource "aws_s3_bucket" "carterjones_backup" {
   bucket        = "carterjones-backup"
   acl           = "private"
@@ -55,8 +56,7 @@ resource "aws_s3_bucket" "carterjones_backup" {
 }
 
 resource "aws_s3_bucket_public_access_block" "carterjones_backup" {
-  bucket     = "carterjones-backup"
-  depends_on = [aws_s3_bucket.carterjones_backup]
+  bucket = aws_s3_bucket.carterjones_backup.id
 
   block_public_acls       = true
   block_public_policy     = true
@@ -64,7 +64,7 @@ resource "aws_s3_bucket_public_access_block" "carterjones_backup" {
   restrict_public_buckets = true
 }
 
-#tfsec:ignore:AWS002 I'm cheap and don't want to pay for storing logs.
+# tfsec:ignore:aws-s3-enable-bucket-logging
 resource "aws_s3_bucket" "carterjones_backup_replica" {
   provider = aws.useast1
 
@@ -106,8 +106,7 @@ resource "aws_s3_bucket" "carterjones_backup_replica" {
 resource "aws_s3_bucket_public_access_block" "carterjones_backup_replica" {
   provider = aws.useast1
 
-  bucket     = "carterjones-backup-replica"
-  depends_on = [aws_s3_bucket.carterjones_backup_replica]
+  bucket = aws_s3_bucket.carterjones_backup_replica.id
 
   block_public_acls       = true
   block_public_policy     = true

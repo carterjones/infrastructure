@@ -1,4 +1,5 @@
-#tfsec:ignore:AWS045 I'm cheap and don't want to pay for a WAF.
+# tfsec:ignore:aws-cloudfront-enable-logging
+# tfsec:ignore:aws-cloudfront-enable-waf
 resource "aws_cloudfront_distribution" "distribution" {
   provider        = aws.useast1
   aliases         = [var.fqdn]
@@ -52,7 +53,7 @@ resource "aws_cloudfront_distribution" "distribution" {
   viewer_certificate {
     acm_certificate_arn            = data.aws_acm_certificate.certificate.arn
     cloudfront_default_certificate = false
-    minimum_protocol_version       = "TLSv1.2_2019"
+    minimum_protocol_version       = "TLSv1.2_2021"
     ssl_support_method             = "sni-only"
   }
 }
