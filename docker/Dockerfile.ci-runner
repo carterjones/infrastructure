@@ -3,7 +3,7 @@ FROM golang:alpine AS golang
 FROM golangci/golangci-lint:latest AS golangci-lint
 FROM koalaman/shellcheck:stable AS shellcheck
 FROM hashicorp/terraform:latest AS terraform
-FROM liamg/tfsec:latest AS tfsec
+FROM aquasec/tfsec:latest AS tfsec
 
 # Create a statically linked version of tfsec. The Docker image produced by wata727/tflint is not
 # statically linked.
