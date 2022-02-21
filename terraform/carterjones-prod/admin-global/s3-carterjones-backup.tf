@@ -1,4 +1,5 @@
 # tfsec:ignore:aws-s3-enable-bucket-logging
+# tfsec:ignore:aws-s3-encryption-customer-key
 # tfsec:ignore:aws-s3-specify-public-access-block
 resource "aws_s3_bucket" "carterjones_backup" {
   bucket        = "carterjones-backup"
@@ -65,6 +66,7 @@ resource "aws_s3_bucket_public_access_block" "carterjones_backup" {
 }
 
 # tfsec:ignore:aws-s3-enable-bucket-logging
+# tfsec:ignore:aws-s3-encryption-customer-key
 resource "aws_s3_bucket" "carterjones_backup_replica" {
   provider = aws.useast1
 
