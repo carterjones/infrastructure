@@ -135,6 +135,7 @@ resource "aws_iam_policy" "carterjones_backup_replication" {
   policy = data.aws_iam_policy_document.carterjones_backup_replication_policy.json
 }
 
+# tfsec:ignore:aws-iam-no-policy-wildcards
 data "aws_iam_policy_document" "carterjones_backup_replication_policy" {
   statement {
     effect = "Allow"

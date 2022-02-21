@@ -1,9 +1,9 @@
-# tfsec:ignore:aws-vpc-no-public-ingress-sg
 resource "aws_security_group" "allow_all_inbound_ssh" {
   name        = "allow_all_inbound_ssh-${var.tier}"
   description = "Allow all inbound SSH traffic"
   vpc_id      = aws_vpc.main.id
 
+  # tfsec:ignore:aws-vpc-no-public-ingress-sgr
   ingress {
     from_port   = 22
     to_port     = 22
@@ -13,12 +13,12 @@ resource "aws_security_group" "allow_all_inbound_ssh" {
   }
 }
 
-# tfsec:ignore:aws-vpc-no-public-ingress-sg
 resource "aws_security_group" "allow_all_inbound_http_and_https" {
   name        = "allow_all_inbound_http_and_https-${var.tier}"
   description = "Allow all inbound HTTP and HTTPS traffic"
   vpc_id      = aws_vpc.main.id
 
+  # tfsec:ignore:aws-vpc-no-public-ingress-sgr
   ingress {
     from_port   = 80
     to_port     = 80
@@ -27,6 +27,7 @@ resource "aws_security_group" "allow_all_inbound_http_and_https" {
     description = "Allow ingress from the world on tcp/80."
   }
 
+  # tfsec:ignore:aws-vpc-no-public-ingress-sgr
   ingress {
     from_port   = 443
     to_port     = 443
@@ -36,12 +37,12 @@ resource "aws_security_group" "allow_all_inbound_http_and_https" {
   }
 }
 
-# tfsec:ignore:aws-vpc-no-public-ingress-sg
 resource "aws_security_group" "allow_all_inbound_rdp" {
   name        = "allow_all_inbound_rdp-${var.tier}"
   description = "Allow RDP traffic"
   vpc_id      = aws_vpc.main.id
 
+  # tfsec:ignore:aws-vpc-no-public-ingress-sgr
   ingress {
     from_port   = 3389
     to_port     = 3389
@@ -65,12 +66,12 @@ resource "aws_security_group" "block_egress" {
   }
 }
 
-# tfsec:ignore:aws-vpc-no-public-egress-sg
 resource "aws_security_group" "allow_egress" {
   name        = "allow_egress-${var.tier}"
   description = "Allow all egress."
   vpc_id      = aws_vpc.main.id
 
+  # tfsec:ignore:aws-vpc-no-public-egress-sgr
   egress {
     from_port   = 0
     to_port     = 0

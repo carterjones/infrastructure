@@ -2,7 +2,6 @@ data "http" "my_ip" {
   url = "https://icanhazip.com"
 }
 
-# tfsec:ignore:aws-vpc-no-public-egress-sg
 resource "aws_security_group" "gaming" {
   name        = "gaming"
   description = "allow gaming ingress and egress"
@@ -16,6 +15,7 @@ resource "aws_security_group" "gaming" {
     cidr_blocks = ["${chomp(data.http.my_ip.body)}/32"]
   }
 
+  # tfsec:ignore:aws-vpc-no-public-egress-sgr
   egress {
     from_port   = 0
     to_port     = 0
