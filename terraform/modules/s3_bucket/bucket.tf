@@ -1,4 +1,5 @@
 # tfsec:ignore:aws-s3-enable-bucket-logging
+# tfsec:ignore:aws-s3-encryption-customer-key
 resource "aws_s3_bucket" "bucket" {
   bucket        = var.bucket_name
   acl           = var.canned_acl
