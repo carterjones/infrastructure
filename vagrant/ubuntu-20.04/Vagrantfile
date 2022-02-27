@@ -1,0 +1,28 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "bento/ubuntu-20.04"
+
+  config.vm.provider "virtualbox" do |vb|
+    # Display the VirtualBox GUI when booting the machine.
+    vb.gui = true
+
+    # Increase the memory available to the graphics.
+    vb.customize ["modifyvm", :id, "--vram", "128"]
+
+    # Change the driver to the one recommended by VirtualBox's settings dialog.
+    vb.customize ["modifyvm", :id, "--graphicscontroller", "vmsvga"]
+
+    # Add an optical drive.
+    vb.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", "1", "--device", "0", "--type", "dvddrive", "--medium", "emptydrive"]
+
+    # Customize the amount of memory on the VM:
+    vb.memory = "4096"
+
+    # Disable the VirtualBox remote display server.
+    vb.customize ["modifyvm", :id, "--vrde", "off"]
+  end
+
+  config.vm.provision "shell", inline: <<-SHELL
+    sudo apt-get update
+    sudo apt install -y gdm3 gnome-terminal nautilus
+  SHELL
+end
