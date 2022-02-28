@@ -2,3 +2,4 @@
 *.plan
 *.terraform
 *.tfstate
+*.vagrant
