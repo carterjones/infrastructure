@@ -27,5 +27,6 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
     sudo apt-get update
     sudo apt install -y gdm3 gnome-terminal nautilus
+    # sudo apt install -y xubuntu-core
   SHELL
 end
