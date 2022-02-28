@@ -19,6 +19,9 @@ Vagrant.configure("2") do |config|
 
     # Disable the VirtualBox remote display server.
     vb.customize ["modifyvm", :id, "--vrde", "off"]
+
+    # Enable 3D acceleration.
+    vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
   end
 
   config.vm.provision "shell", inline: <<-SHELL
