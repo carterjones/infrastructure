@@ -112,6 +112,14 @@ resource "aws_route53_record" "blog_carterjones_info" {
   ttl     = 3600
 }
 
+resource "aws_route53_record" "dm_carterjones_info" {
+  zone_id = aws_route53_zone.carterjones_info.zone_id
+  name    = "dm.carterjones.info"
+  type    = "CNAME"
+  records = ["profile.direct.me"]
+  ttl     = 60
+}
+
 resource "aws_route53_record" "keybase_carterjones_info" {
   zone_id = aws_route53_zone.carterjones_info.zone_id
   name    = "keybase.carterjones.info"
