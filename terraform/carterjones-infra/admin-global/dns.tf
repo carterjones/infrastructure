@@ -1,3 +1,7 @@
+#########
+# Zones #
+#########
+
 resource "aws_route53_zone" "carterjones_info" {
   name = "carterjones.info"
 }
@@ -13,6 +17,18 @@ resource "aws_route53_zone" "carterjones_io" {
 output "carterjones_io_nameservers" {
   value = aws_route53_zone.carterjones_io.name_servers
 }
+
+resource "aws_route53_zone" "carterjones_me" {
+  name = "carterjones.me"
+}
+
+output "carterjones_me_nameservers" {
+  value = aws_route53_zone.carterjones_me.name_servers
+}
+
+####################
+# carterjones.info #
+####################
 
 resource "aws_route53_record" "prod_carterjones_info" {
   allow_overwrite = true
@@ -216,4 +232,30 @@ resource "aws_route53_record" "www_carterjones_info_dns_validation" {
   type    = "CNAME"
   records = ["_e0f2f56b3e4ee858e4aa4abd3e93764a.lkwmzfhcjn.acm-validations.aws."]
   ttl     = 60
+}
+
+##################
+# carterjones.me #
+##################
+
+resource "aws_route53_record" "carterjones_me_txt_protonmail" {
+  zone_id = aws_route53_zone.carterjones_me.zone_id
+  name    = "carterjones.me"
+  type    = "TXT"
+  ttl     = 60
+  records = [
+    "protonmail-verification=8607a7acf74aa5dc9b5fa41c38b70665fb690312",
+  ]
+}
+
+resource "aws_route53_record" "carterjones_me_mx" {
+  zone_id = aws_route53_zone.carterjones_me.zone_id
+  name    = "carterjones.me"
+  type    = "MX"
+  ttl     = 60
+
+  records = [
+    "10 mail.protonmail.ch.",
+    "20 mailsec.protonmail.ch.",
+  ]
 }
