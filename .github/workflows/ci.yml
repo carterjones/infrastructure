@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-      - run: tflint --init && pre-commit run --all
+      - run: tflint --init && (pre-commit run --all || cat /github/home/.cache/pre-commit/pre-commit.log)
 
   lint-terraform:
     container:
