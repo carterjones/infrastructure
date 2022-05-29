@@ -14,7 +14,7 @@ data "aws_ami" "ubuntu_20_04" {
 
 module "ec2_cluster" {
   source  = "terraform-aws-modules/ec2-instance/aws"
-  version = "~> 2.0"
+  version = "~> 4.0"
 
   name           = "downloaders"
   instance_count = 1
@@ -26,6 +26,14 @@ module "ec2_cluster" {
   vpc_security_group_ids = [aws_security_group.downloaders.id]
   subnet_id              = module.vpc.public_subnets[0]
   iam_instance_profile   = aws_iam_instance_profile.upload_to_public_carterjones_info.name
+
+  metadata_options = {
+    http_tokens = "required"
+  }
+
+  root_block_device = {
+    encrypted = true
+  }
 
   tags = {
     Terraform   = "true"

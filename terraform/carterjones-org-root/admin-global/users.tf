@@ -25,6 +25,14 @@ module "admins_group" {
   allowed_roles = [aws_iam_role.admin.arn]
 }
 
+# tfsec:ignore:aws-iam-no-policy-wildcards
+module "admins_group_mfa" {
+  source  = "trussworks/mfa/aws"
+  version = "~> 3.0"
+
+  iam_groups = ["admins"]
+}
+
 # This is a generic role assumption policy that enforces MFA.
 data "aws_iam_policy_document" "role_assume_role_policy" {
   statement {
