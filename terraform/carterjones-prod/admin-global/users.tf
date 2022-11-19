@@ -15,7 +15,7 @@ resource "aws_iam_role_policy_attachment" "infra_role_policy" {
 
 # CI user.
 
-# tfsec:ignore:aws-iam-enforce-mfa
+# tfsec:ignore:aws-iam-enforce-group-mfa
 resource "aws_iam_group" "ci_runners" {
   name = "ci-runners"
 }
