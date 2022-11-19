@@ -17,12 +17,12 @@ resource "aws_organizations_organization" "main" {
 
 resource "aws_organizations_organizational_unit" "carterjones" {
   name      = "carterjones"
-  parent_id = aws_organizations_organization.main.roots.0.id
+  parent_id = aws_organizations_organization.main.roots[0].id
 }
 
 resource "aws_organizations_organizational_unit" "suspended" {
   name      = "suspended"
-  parent_id = aws_organizations_organization.main.roots.0.id
+  parent_id = aws_organizations_organization.main.roots[0].id
 }
 
 module "org-scps" {
