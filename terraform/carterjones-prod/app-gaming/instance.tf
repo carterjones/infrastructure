@@ -1,12 +1,4 @@
 locals {
-  # Static AMI references to Windows Server 2019 Datacenter edition. I use
-  # these instead of dynamically looking up the IDs, since the gaming instance
-  # is long-lived and I want to be able to shut down the instance and continue
-  # running Terraform updates to it without replacing the instance entirely.
-  windows_amis = {
-    "us-west-1" : "ami-0ae8e32a263869f9b",
-    "us-west-2" : "ami-0b9909553e2f757f4",
-  }
   # NVIDIA Gaming PC - Windows Server 2019
   nvidia_amis = {
     "us-west-1" : "ami-002d9909d820c7db7",
