@@ -28,7 +28,7 @@ module "admins_group" {
 # tfsec:ignore:aws-iam-no-policy-wildcards
 module "admins_group_mfa" {
   source  = "trussworks/mfa/aws"
-  version = "~> 3.0"
+  version = "~> 3"
 
   iam_groups = ["admins"]
 }
