@@ -9,10 +9,10 @@ variable "block_public_access" {
   type        = bool
 }
 
-variable "versioning_enabled" {
-  description = "True if versoning should be enabled."
-  default     = false
-  type        = bool
+variable "versioning_status" {
+  description = "The status of bucket versioning."
+  default     = "Disabled"
+  type        = string
 }
 
 variable "canned_acl" {

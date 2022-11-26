@@ -1,45 +1,7 @@
 # tfsec:ignore:aws-s3-enable-bucket-logging
-# tfsec:ignore:aws-s3-encryption-customer-key
-# tfsec:ignore:aws-s3-specify-public-access-block
 resource "aws_s3_bucket" "carterjones_backup" {
   bucket        = "carterjones-backup"
-  acl           = "private"
   force_destroy = false
-
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        sse_algorithm = "AES256"
-      }
-    }
-  }
-
-  versioning {
-    enabled = true
-  }
-
-  lifecycle_rule {
-    enabled                                = true
-    abort_incomplete_multipart_upload_days = 1
-
-    transition {
-      days          = 30
-      storage_class = "STANDARD_IA"
-    }
-
-    transition {
-      days          = 60
-      storage_class = "GLACIER"
-    }
-
-    expiration {
-      expired_object_delete_marker = true
-    }
-
-    noncurrent_version_expiration {
-      days = 1
-    }
-  }
 
   replication_configuration {
     role = aws_iam_role.carterjones_backup_replication.arn
@@ -65,44 +27,68 @@ resource "aws_s3_bucket_public_access_block" "carterjones_backup" {
   restrict_public_buckets = true
 }
 
-# tfsec:ignore:aws-s3-enable-bucket-logging
-# tfsec:ignore:aws-s3-encryption-customer-key
-resource "aws_s3_bucket" "carterjones_backup_replica" {
-  provider = aws.useast1
+resource "aws_s3_bucket_lifecycle_configuration" "carterjones_backup" {
+  bucket = aws_s3_bucket.carterjones_backup.id
 
-  bucket        = "carterjones-backup-replica"
-  acl           = "private"
-  force_destroy = false
+  rule {
+    id     = "carterjones-backup"
+    status = "Enabled"
 
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        sse_algorithm = "AES256"
-      }
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 1
     }
-  }
-
-  versioning {
-    enabled = true
-  }
-
-  lifecycle_rule {
-    enabled                                = true
-    abort_incomplete_multipart_upload_days = 1
 
     transition {
-      days          = 1
-      storage_class = "DEEP_ARCHIVE"
+      days          = 30
+      storage_class = "STANDARD_IA"
     }
 
-    noncurrent_version_expiration {
-      days = 1
+    transition {
+      days          = 60
+      storage_class = "GLACIER"
     }
 
     expiration {
       expired_object_delete_marker = true
     }
+
+    noncurrent_version_expiration {
+      noncurrent_days = 1
+    }
   }
+}
+
+resource "aws_s3_bucket_versioning" "carterjones_backup" {
+  bucket = aws_s3_bucket.carterjones_backup.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+# tfsec:ignore:aws-s3-encryption-customer-key
+resource "aws_s3_bucket_server_side_encryption_configuration" "carterjones_backup" {
+  bucket = aws_s3_bucket.carterjones_backup.id
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
+}
+
+resource "aws_s3_bucket_acl" "carterjones_backup" {
+  bucket = aws_s3_bucket.carterjones_backup.id
+
+  acl = "private"
+}
+
+# tfsec:ignore:aws-s3-enable-bucket-logging
+resource "aws_s3_bucket" "carterjones_backup_replica" {
+  provider = aws.useast1
+
+  bucket        = "carterjones-backup-replica"
+  force_destroy = false
 }
 
 resource "aws_s3_bucket_public_access_block" "carterjones_backup_replica" {
@@ -114,6 +100,65 @@ resource "aws_s3_bucket_public_access_block" "carterjones_backup_replica" {
   block_public_policy     = true
   ignore_public_acls      = true
   restrict_public_buckets = true
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "carterjones_backup_replica" {
+  provider = aws.useast1
+
+  bucket = aws_s3_bucket.carterjones_backup_replica.id
+
+  rule {
+    id     = "carterjones-backup-replica"
+    status = "Enabled"
+
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 1
+    }
+
+    transition {
+      days          = 1
+      storage_class = "DEEP_ARCHIVE"
+    }
+
+    noncurrent_version_expiration {
+      noncurrent_days = 1
+    }
+
+    expiration {
+      expired_object_delete_marker = true
+    }
+  }
+}
+
+resource "aws_s3_bucket_versioning" "carterjones_backup_replica" {
+  provider = aws.useast1
+
+  bucket = aws_s3_bucket.carterjones_backup_replica.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+# tfsec:ignore:aws-s3-encryption-customer-key
+resource "aws_s3_bucket_server_side_encryption_configuration" "carterjones_backup_replica" {
+  provider = aws.useast1
+
+  bucket = aws_s3_bucket.carterjones_backup_replica.id
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
+}
+
+resource "aws_s3_bucket_acl" "carterjones_backup_replica" {
+  provider = aws.useast1
+
+  bucket = aws_s3_bucket.carterjones_backup_replica.id
+
+  acl = "private"
 }
 
 resource "aws_iam_role" "carterjones_backup_replication" {

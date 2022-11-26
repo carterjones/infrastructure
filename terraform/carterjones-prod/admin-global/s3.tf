@@ -18,7 +18,7 @@ module "carterjones_terraform_state_prod_s3" {
 module "carterjones_info_s3" {
   source      = "../../modules/s3_bucket"
   bucket_name = "carterjones.info"
-  redirect    = "https://www.carterjones.info"
+  redirect    = "www.carterjones.info"
 }
 
 module "git_carterjones_info_s3" {
@@ -27,9 +27,10 @@ module "git_carterjones_info_s3" {
 }
 
 module "keybase_carterjones_info_s3" {
-  source      = "../../modules/s3_bucket"
-  bucket_name = "keybase.carterjones.info"
-  redirect    = "https://carterjones.keybase.pub"
+  source            = "../../modules/s3_bucket"
+  bucket_name       = "keybase.carterjones.info"
+  redirect          = "carterjones.keybase.pub"
+  versioning_status = "Suspended"
 }
 
 module "mail_carterjones_info_s3" {
@@ -57,12 +58,13 @@ module "public_carterjones_info_s3" {
   bucket_name         = "public.carterjones.info"
   block_public_access = false
   html_page           = "index.html"
+  versioning_status   = "Suspended"
 }
 
 module "resume_carterjones_info_s3" {
   source              = "../../modules/s3_bucket"
   bucket_name         = "resume.carterjones.info"
-  versioning_enabled  = true
+  versioning_status   = "Enabled"
   block_public_access = false
   html_page           = "Carter Jones - Resume.pdf"
 }
