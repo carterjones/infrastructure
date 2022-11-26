@@ -4,6 +4,7 @@ locals {
     "us-west-1" : "ami-002d9909d820c7db7",
   }
 }
+
 resource "aws_instance" "gaming" {
   ami = lookup(local.nvidia_amis, local.region, "fail")
 

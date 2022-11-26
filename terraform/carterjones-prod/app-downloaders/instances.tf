@@ -16,8 +16,8 @@ module "ec2_cluster" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "~> 4.0"
 
-  name           = "downloaders"
-  instance_count = 1
+  name  = "downloaders"
+  count = var.num_instances
 
   ami                    = data.aws_ami.ubuntu_20_04.id
   instance_type          = "m5.large"
@@ -31,9 +31,9 @@ module "ec2_cluster" {
     http_tokens = "required"
   }
 
-  root_block_device = {
+  root_block_device = [{
     encrypted = true
-  }
+  }]
 
   tags = {
     Terraform   = "true"

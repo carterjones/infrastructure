@@ -10,4 +10,6 @@ module "bootstrap" {
 
   region        = local.region
   account_alias = "carterjones-org-root"
+
+  log_bucket_versioning = "Suspended"
 }
