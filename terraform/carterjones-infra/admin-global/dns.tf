@@ -144,14 +144,6 @@ resource "aws_route53_record" "keybase_carterjones_info" {
   ttl     = 3600
 }
 
-resource "aws_route53_record" "mail_carterjones_info" {
-  zone_id = aws_route53_zone.carterjones_info.zone_id
-  name    = "mail.carterjones.info"
-  type    = "CNAME"
-  records = ["mail.prod.carterjones.info"]
-  ttl     = 3600
-}
-
 resource "aws_route53_record" "public_carterjones_info" {
   zone_id = aws_route53_zone.carterjones_info.zone_id
   name    = "public.carterjones.info"
@@ -199,14 +191,6 @@ resource "aws_route53_record" "keybase_carterjones_info_dns_validation" {
   name    = "_9bdd3608960cb2c68500805e749fe2f4.keybase.carterjones.info."
   type    = "CNAME"
   records = ["_0deb8ff079549c3125101c0f3abe046c.lkwmzfhcjn.acm-validations.aws."]
-  ttl     = 60
-}
-
-resource "aws_route53_record" "mail_carterjones_info_dns_validation" {
-  zone_id = aws_route53_zone.carterjones_info.zone_id
-  name    = "_adbb8550810052758a1311fd62ba882c.mail.carterjones.info."
-  type    = "CNAME"
-  records = ["_427c13d3066f3a835c8610111e2c1e7a.lkwmzfhcjn.acm-validations.aws."]
   ttl     = 60
 }
 

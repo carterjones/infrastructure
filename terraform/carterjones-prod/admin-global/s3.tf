@@ -36,7 +36,6 @@ module "keybase_carterjones_info_s3" {
 module "mail_carterjones_info_s3" {
   source      = "../../modules/s3_bucket"
   bucket_name = "mail.carterjones.info"
-  redirect    = "https://mail.google.com/a/carterjones.info"
 }
 
 module "res_carterjones_info_s3" {

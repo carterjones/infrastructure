@@ -13,11 +13,6 @@ module "keybase_carterjones_info" {
   fqdn   = "keybase.carterjones.info"
 }
 
-module "mail_carterjones_info" {
-  source = "../../modules/cloudfront_s3_website"
-  fqdn   = "mail.carterjones.info"
-}
-
 module "public_carterjones_info" {
   source = "../../modules/cloudfront_s3_website"
   fqdn   = "public.carterjones.info"
