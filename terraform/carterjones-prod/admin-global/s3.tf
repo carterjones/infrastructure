@@ -26,13 +26,6 @@ module "git_carterjones_info_s3" {
   bucket_name = "git.carterjones.info"
 }
 
-module "keybase_carterjones_info_s3" {
-  source            = "../../modules/s3_bucket"
-  bucket_name       = "keybase.carterjones.info"
-  redirect          = "carterjones.keybase.pub"
-  versioning_status = "Suspended"
-}
-
 module "mail_carterjones_info_s3" {
   source      = "../../modules/s3_bucket"
   bucket_name = "mail.carterjones.info"
@@ -85,4 +78,12 @@ module "www_carterjones_info_s3" {
   bucket_name         = "www.carterjones.info"
   block_public_access = false
   html_page           = "index.html"
+}
+
+# Unused buckets.
+
+module "keybase_carterjones_info_s3" {
+  source            = "../../modules/s3_bucket"
+  bucket_name       = "keybase.carterjones.info"
+  versioning_status = "Suspended"
 }

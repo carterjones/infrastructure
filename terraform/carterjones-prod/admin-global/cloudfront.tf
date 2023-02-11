@@ -8,11 +8,6 @@ module "carterjones_info" {
   fqdn   = "carterjones.info"
 }
 
-module "keybase_carterjones_info" {
-  source = "../../modules/cloudfront_s3_website"
-  fqdn   = "keybase.carterjones.info"
-}
-
 module "public_carterjones_info" {
   source = "../../modules/cloudfront_s3_website"
   fqdn   = "public.carterjones.info"

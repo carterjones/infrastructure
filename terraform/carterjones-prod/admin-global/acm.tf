@@ -18,16 +18,6 @@ resource "aws_acm_certificate" "carterjones_info" {
   }
 }
 
-resource "aws_acm_certificate" "keybase_carterjones_info" {
-  provider          = aws.useast1
-  domain_name       = "keybase.carterjones.info"
-  validation_method = "DNS"
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
-
 resource "aws_acm_certificate" "public_carterjones_info" {
   provider          = aws.useast1
   domain_name       = "public.carterjones.info"

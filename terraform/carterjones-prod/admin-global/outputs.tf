@@ -6,10 +6,6 @@ output "carterjones_info_dns_validation" {
   value = aws_acm_certificate.carterjones_info.domain_validation_options
 }
 
-output "keybase_carterjones_info_dns_validation" {
-  value = aws_acm_certificate.keybase_carterjones_info.domain_validation_options
-}
-
 output "public_carterjones_info_dns_validation" {
   value = aws_acm_certificate.public_carterjones_info.domain_validation_options
 }

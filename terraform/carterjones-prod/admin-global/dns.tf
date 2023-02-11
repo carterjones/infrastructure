@@ -22,18 +22,6 @@ resource "aws_route53_record" "blog_prod_carterjones_info" {
   }
 }
 
-resource "aws_route53_record" "keybase_prod_carterjones_info" {
-  zone_id = aws_route53_zone.prod_carterjones_info.zone_id
-  name    = "keybase.prod.carterjones.info"
-  type    = "A"
-
-  alias {
-    name                   = module.keybase_carterjones_info.distribution_domain_name
-    zone_id                = module.keybase_carterjones_info.distribution_hosted_zone_id
-    evaluate_target_health = false
-  }
-}
-
 resource "aws_route53_record" "public_prod_carterjones_info" {
   zone_id = aws_route53_zone.prod_carterjones_info.zone_id
   name    = "public.prod.carterjones.info"
