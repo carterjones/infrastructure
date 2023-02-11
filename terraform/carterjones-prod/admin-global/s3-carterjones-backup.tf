@@ -2,20 +2,6 @@
 resource "aws_s3_bucket" "carterjones_backup" {
   bucket        = "carterjones-backup"
   force_destroy = false
-
-  replication_configuration {
-    role = aws_iam_role.carterjones_backup_replication.arn
-
-    rules {
-      id     = "full-bucket-replication"
-      status = "Enabled"
-
-      destination {
-        bucket        = aws_s3_bucket.carterjones_backup_replica.arn
-        storage_class = "DEEP_ARCHIVE"
-      }
-    }
-  }
 }
 
 resource "aws_s3_bucket_public_access_block" "carterjones_backup" {
@@ -81,6 +67,22 @@ resource "aws_s3_bucket_acl" "carterjones_backup" {
   bucket = aws_s3_bucket.carterjones_backup.id
 
   acl = "private"
+}
+
+resource "aws_s3_bucket_replication_configuration" "carterjones_backup" {
+  bucket = aws_s3_bucket.carterjones_backup.id
+
+  role = aws_iam_role.carterjones_backup_replication.arn
+
+  rule {
+    id     = "full-bucket-replication"
+    status = "Enabled"
+
+    destination {
+      bucket        = aws_s3_bucket.carterjones_backup_replica.arn
+      storage_class = "DEEP_ARCHIVE"
+    }
+  }
 }
 
 # tfsec:ignore:aws-s3-enable-bucket-logging
