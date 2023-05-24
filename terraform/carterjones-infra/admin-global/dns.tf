@@ -202,6 +202,73 @@ resource "aws_route53_record" "www_carterjones_info_dns_validation" {
   ttl     = 3600
 }
 
+#######################
+# carterjones.io #
+#######################
+
+resource "aws_route53_record" "carterjones_io_txt" {
+  zone_id = aws_route53_zone.carterjones_io.zone_id
+  name    = "carterjones.io"
+  type    = "TXT"
+  ttl     = 3600
+  records = [
+    "sl-verification=fxtnezpppxjqnuslstckmszeqlafgl",
+    "v=spf1 include:simplelogin.co ~all",
+  ]
+}
+
+resource "aws_route53_record" "carterjones_io_mx" {
+  zone_id = aws_route53_zone.carterjones_io.zone_id
+  name    = "carterjones.io"
+  type    = "MX"
+  ttl     = 3600
+
+  records = [
+    "10 mx1.simplelogin.co.",
+    "20 mx2.simplelogin.co.",
+  ]
+}
+
+resource "aws_route53_record" "carterjones_io_dkim1" {
+  zone_id = aws_route53_zone.carterjones_io.zone_id
+  name    = "dkim._domainkey.carterjones.io"
+  type    = "CNAME"
+  records = [
+    "dkim._domainkey.simplelogin.co.",
+  ]
+  ttl = 3600
+}
+
+resource "aws_route53_record" "carterjones_io_dkim2" {
+  zone_id = aws_route53_zone.carterjones_io.zone_id
+  name    = "dkim02._domainkey.carterjones.io"
+  type    = "CNAME"
+  records = [
+    "dkim02._domainkey.simplelogin.co.",
+  ]
+  ttl = 3600
+}
+
+resource "aws_route53_record" "carterjones_io_dkim3" {
+  zone_id = aws_route53_zone.carterjones_io.zone_id
+  name    = "dkim03._domainkey.carterjones.io"
+  type    = "CNAME"
+  records = [
+    "dkim03._domainkey.simplelogin.co.",
+  ]
+  ttl = 3600
+}
+
+resource "aws_route53_record" "carterjones_io_dmarc" {
+  zone_id = aws_route53_zone.carterjones_io.zone_id
+  name    = "_dmarc.carterjones.io"
+  type    = "TXT"
+  ttl     = 3600
+  records = [
+    "v=DMARC1; p=quarantine; pct=100; adkim=s; aspf=s",
+  ]
+}
+
 ##################
 # carterjones.me #
 ##################
