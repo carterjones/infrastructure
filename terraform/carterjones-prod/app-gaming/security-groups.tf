@@ -12,7 +12,7 @@ resource "aws_security_group" "gaming" {
     from_port   = 3389
     to_port     = 3389
     protocol    = "tcp"
-    cidr_blocks = ["${chomp(data.http.my_ip.body)}/32"]
+    cidr_blocks = ["${chomp(data.http.my_ip.response_body)}/32"]
   }
 
   # tfsec:ignore:aws-ec2-no-public-egress-sgr

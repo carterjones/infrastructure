@@ -4,7 +4,7 @@ data "aws_region" "current" {}
 # tfsec:ignore:aws-ec2-require-vpc-flow-logs-for-all-vpcs
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 3.0.0"
+  version = "~> 4.0.2"
 
   name = "app-gaming"
   cidr = "10.1.0.0/16"

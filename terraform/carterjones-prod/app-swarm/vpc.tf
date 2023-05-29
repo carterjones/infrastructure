@@ -4,7 +4,7 @@ data "aws_region" "current" {}
 # tfsec:ignore:aws-ec2-require-vpc-flow-logs-for-all-vpcs
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 3.0.0"
+  version = "~> 4.0.2"
 
   name = "app-swarm"
   cidr = "10.2.0.0/16"
@@ -15,6 +15,9 @@ module "vpc" {
 
   enable_nat_gateway = false
   enable_vpn_gateway = false
+
+  enable_dns_hostnames    = false
+  map_public_ip_on_launch = true
 
   tags = {
     Terraform   = "true"
