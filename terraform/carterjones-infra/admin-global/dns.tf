@@ -202,9 +202,9 @@ resource "aws_route53_record" "www_carterjones_info_dns_validation" {
   ttl     = 172800
 }
 
-#######################
+##################
 # carterjones.io #
-#######################
+##################
 
 resource "aws_route53_record" "carterjones_io_txt" {
   zone_id = aws_route53_zone.carterjones_io.zone_id
