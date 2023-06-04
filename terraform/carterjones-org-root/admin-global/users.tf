@@ -2,7 +2,7 @@ data "aws_caller_identity" "current" {}
 
 locals {
   admin_users = [
-    "carter.org-root",
+    "carter",
   ]
 }
 
