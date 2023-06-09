@@ -6,6 +6,9 @@ module "infra_role" {
 
   iam_role_name     = "infra"
   source_account_id = var.account_id_id
+
+  # Maximum session duratino of 12 hours.
+  role_assumption_max_duration = 43200
 }
 
 resource "aws_iam_role_policy_attachment" "infra_role_policy" {
