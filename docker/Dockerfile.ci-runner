@@ -22,11 +22,11 @@ RUN apk add --update --no-cache \
     build-base \
     git \
     python3 \
-    python3-dev
-RUN python3 -m ensurepip
+    python3-dev \
+    py3-pip
 
 # Install pre-commit.
-RUN pip3 install pre-commit
+RUN pip3 install pre-commit --break-system-packages
 
 # Copy statically linked binaries from other Docker images.
 COPY --from=golang /usr/local/go/bin/go /bin/go
