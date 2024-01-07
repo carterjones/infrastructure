@@ -1,5 +1,3 @@
-# tfsec:ignore:aws-cloudfront-enable-logging
-# tfsec:ignore:aws-cloudfront-enable-waf
 resource "aws_cloudfront_distribution" "distribution" {
   provider        = aws.useast1
   aliases         = [var.fqdn]

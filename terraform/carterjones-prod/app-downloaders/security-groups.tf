@@ -15,7 +15,6 @@ resource "aws_security_group" "downloaders" {
     cidr_blocks = ["${chomp(data.http.my_ip.response_body)}/32"]
   }
 
-  # tfsec:ignore:aws-ec2-no-public-egress-sgr
   egress {
     from_port   = 0
     to_port     = 0

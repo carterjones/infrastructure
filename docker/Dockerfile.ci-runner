@@ -3,7 +3,6 @@ FROM golang:alpine AS golang
 FROM golangci/golangci-lint:latest AS golangci-lint
 FROM koalaman/shellcheck:stable AS shellcheck
 FROM hashicorp/terraform:latest AS terraform
-FROM aquasec/tfsec:latest AS tfsec
 
 # Create a statically linked version of tfsec. The Docker image produced by wata727/tflint is not
 # statically linked.
@@ -35,7 +34,6 @@ COPY --from=golangci-lint /usr/bin/golangci-lint /bin/golangci-lint
 COPY --from=shellcheck /bin/shellcheck /bin/shellcheck
 COPY --from=terraform /bin/terraform /bin/terraform
 COPY --from=tflint /bin/tflint /bin/tflint
-COPY --from=tfsec /usr/bin/tfsec /bin/tfsec
 
 # Initialize some pre-commit hooks used in my repositories. This saves various files to
 # /root/.cache/pre-commit so that it saves time when running pre-commit in the future during CI.

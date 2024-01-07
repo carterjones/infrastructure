@@ -18,7 +18,6 @@ resource "aws_iam_role_policy_attachment" "infra_role_policy" {
 
 # CI user.
 
-# tfsec:ignore:aws-iam-enforce-group-mfa
 resource "aws_iam_group" "ci_runners" {
   name = "ci-runners"
 }
@@ -66,7 +65,6 @@ resource "aws_iam_policy" "get_put_ci_state" {
   policy      = data.aws_iam_policy_document.get_put_ci_state.json
 }
 
-# tfsec:ignore:aws-iam-no-policy-wildcards
 data "aws_iam_policy_document" "get_put_ci_state" {
   statement {
     sid    = "GetPutCIStateObjects"

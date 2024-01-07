@@ -24,7 +24,6 @@ data "aws_iam_policy_document" "user_assume_role_policy" {
 
 # This module enforces MFA; any groups defined in this file should
 # be added to the iam_groups argument.
-# tfsec:ignore:aws-iam-no-policy-wildcards
 module "iam_enforce_mfa" {
   source  = "trussworks/mfa/aws"
   version = "3.0.1"
@@ -86,7 +85,6 @@ module "infra_group" {
     aws_iam_role.infra.arn,
     "arn:aws:iam::${var.account_id_infra}:role/infra",
     "arn:aws:iam::${var.account_id_org_root}:role/billing",
-    # "arn:aws:iam::${var.account_id_sandbox}:role/infra",
     "arn:aws:iam::${var.account_id_prod}:role/infra",
   ]
   group_name = "infra"

@@ -1,22 +1,19 @@
 exclude: ^attic/.*$
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.2.0
+  rev: v4.5.0
   hooks:
     - id: check-yaml
     - id: end-of-file-fixer
     - id: trailing-whitespace
 - repo: https://github.com/gruntwork-io/pre-commit
-  rev: v0.1.17
+  rev: v0.1.23
   hooks:
     - id: shellcheck
 - repo: https://github.com/antonbabenko/pre-commit-terraform
-  rev: v1.72.1
+  rev: v1.86.0
   hooks:
     - id: terraform_fmt
     - id: terraform_tflint
       args:
         - --args=--config=__GIT_WORKING_DIR__/.tflint.hcl
-    - id: terraform_tfsec
-      args:
-        - '--args=-e AWS071,AWS073,AWS074,AWS075,AWS076,AWS077,AWS082'

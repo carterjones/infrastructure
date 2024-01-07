@@ -17,6 +17,3 @@ repos:
     - id: terraform_tflint
       args:
         - --args=--config=__GIT_WORKING_DIR__/.tflint.hcl
-    - id: terraform_tfsec
-      args:
-        - '--args=-e AWS071,AWS073,AWS074,AWS075,AWS076,AWS077,AWS082'

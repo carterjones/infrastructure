@@ -1,13 +1,8 @@
-# tfsec:ignore:aws-s3-enable-bucket-logging
 resource "aws_s3_bucket" "bucket" {
   bucket        = var.bucket_name
   force_destroy = false
 }
 
-# tfsec:ignore:aws-s3-block-public-acls
-# tfsec:ignore:aws-s3-block-public-policy
-# tfsec:ignore:aws-s3-ignore-public-acls
-# tfsec:ignore:aws-s3-no-public-buckets
 resource "aws_s3_bucket_public_access_block" "bucket" {
   bucket = aws_s3_bucket.bucket.id
 
@@ -25,7 +20,6 @@ resource "aws_s3_bucket_versioning" "bucket" {
   }
 }
 
-# tfsec:ignore:aws-s3-encryption-customer-key
 resource "aws_s3_bucket_server_side_encryption_configuration" "bucket" {
   bucket = aws_s3_bucket.bucket.id
 

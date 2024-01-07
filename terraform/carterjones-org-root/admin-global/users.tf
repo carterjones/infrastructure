@@ -25,7 +25,6 @@ module "admins_group" {
   allowed_roles = [aws_iam_role.admin.arn]
 }
 
-# tfsec:ignore:aws-iam-no-policy-wildcards
 module "admins_group_mfa" {
   source  = "trussworks/mfa/aws"
   version = "~> 3"

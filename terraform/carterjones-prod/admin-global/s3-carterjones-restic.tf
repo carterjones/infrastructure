@@ -1,4 +1,3 @@
-# tfsec:ignore:aws-s3-enable-bucket-logging
 resource "aws_s3_bucket" "carterjones_restic" {
   bucket        = "carterjones-restic"
   force_destroy = false
@@ -47,7 +46,6 @@ resource "aws_s3_bucket_versioning" "carterjones_restic" {
   }
 }
 
-# tfsec:ignore:aws-s3-encryption-customer-key
 resource "aws_s3_bucket_server_side_encryption_configuration" "carterjones_restic" {
   bucket = aws_s3_bucket.carterjones_restic.id
 
@@ -74,7 +72,6 @@ resource "aws_s3_bucket_replication_configuration" "carterjones_restic" {
   }
 }
 
-# tfsec:ignore:aws-s3-enable-bucket-logging
 resource "aws_s3_bucket" "carterjones_restic_replica" {
   provider = aws.useast1
 
@@ -131,7 +128,6 @@ resource "aws_s3_bucket_versioning" "carterjones_restic_replica" {
   }
 }
 
-# tfsec:ignore:aws-s3-encryption-customer-key
 resource "aws_s3_bucket_server_side_encryption_configuration" "carterjones_restic_replica" {
   provider = aws.useast1
 
@@ -165,7 +161,6 @@ resource "aws_iam_policy" "carterjones_restic_replication" {
   policy = data.aws_iam_policy_document.carterjones_restic_replication_policy.json
 }
 
-# tfsec:ignore:aws-iam-no-policy-wildcards
 data "aws_iam_policy_document" "carterjones_restic_replication_policy" {
   statement {
     effect = "Allow"
