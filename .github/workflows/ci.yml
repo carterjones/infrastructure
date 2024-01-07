@@ -33,7 +33,7 @@ jobs:
     needs: lint-pre-commit
     strategy:
       matrix:
-        os: ["ci-runner", "centos-stream9", "manjaro", "ubuntu-22.04"]
+        os: ["ci-runner", "centos-stream9", "manjaro", "ubuntu-22.04", "restic-backup"]
     steps:
       - uses: actions/checkout@v4
       - name: build ${{ matrix.os }} (and push when on main branch)

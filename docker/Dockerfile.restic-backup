@@ -1,0 +1,6 @@
+FROM --platform=linux/amd64 alpine:latest
+
+RUN apk add \
+    aws-cli \
+    bash \
+    restic
