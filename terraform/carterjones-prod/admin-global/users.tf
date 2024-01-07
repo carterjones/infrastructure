@@ -76,3 +76,36 @@ data "aws_iam_policy_document" "get_put_ci_state" {
     resources = ["arn:aws:s3:::carterjones-terraform-state-ci/*.state"]
   }
 }
+
+# Restic backup user.
+
+resource "aws_iam_user" "restic_backup" {
+  name = "restic-backup"
+  path = "/"
+}
+
+data "aws_iam_policy_document" "restic_backup" {
+  statement {
+    effect    = "Allow"
+    actions   = ["s3:ListBucket"]
+    resources = ["arn:aws:s3:::carterjones-restic"]
+  }
+
+  statement {
+    effect    = "Allow"
+    actions   = ["s3:*Object"]
+    resources = ["arn:aws:s3:::carterjones-restic/*"]
+  }
+}
+
+resource "aws_iam_policy" "restic_backup" {
+  name        = "restic-backup"
+  path        = "/"
+  description = "Allow backing up to the restic bucket"
+  policy      = data.aws_iam_policy_document.restic_backup.json
+}
+
+resource "aws_iam_user_policy_attachment" "restic_backup" {
+  user       = aws_iam_user.restic_backup.name
+  policy_arn = aws_iam_policy.restic_backup.arn
+}
