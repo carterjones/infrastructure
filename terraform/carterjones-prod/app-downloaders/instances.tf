@@ -2,13 +2,13 @@ locals {
   canonical_account_number = "099720109477"
 }
 
-data "aws_ami" "ubuntu_20_04" {
+data "aws_ami" "ubuntu_22_04" {
   most_recent = true
   owners      = [local.canonical_account_number]
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
   }
 }
 
@@ -19,7 +19,7 @@ module "ec2_cluster" {
   name  = "downloaders"
   count = var.num_instances
 
-  ami                    = data.aws_ami.ubuntu_20_04.id
+  ami                    = data.aws_ami.ubuntu_22_04.id
   instance_type          = "m5.large"
   key_name               = "ec2-us-west-2"
   monitoring             = true
