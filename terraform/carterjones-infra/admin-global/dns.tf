@@ -26,6 +26,14 @@ output "carterjones_me_nameservers" {
   value = aws_route53_zone.carterjones_me.name_servers
 }
 
+resource "aws_route53_zone" "carter_jones_org" {
+  name = "carter-jones.org"
+}
+
+output "carter_jones_org_nameservers" {
+  value = aws_route53_zone.carter_jones_org.name_servers
+}
+
 ####################
 # carterjones.info #
 ####################
@@ -292,5 +300,72 @@ resource "aws_route53_record" "carterjones_me_mx" {
   records = [
     "10 mail.protonmail.ch.",
     "20 mailsec.protonmail.ch.",
+  ]
+}
+
+####################
+# carter-jones.org #
+####################
+
+resource "aws_route53_record" "carter_jones_org_txt_protonmail" {
+  zone_id = aws_route53_zone.carter_jones_org.zone_id
+  name    = "carter-jones.org"
+  type    = "TXT"
+  ttl     = 172800
+  records = [
+    "protonmail-verification=f9130f498edeeda340bfeebe3b3dacb58634b65e",
+    "v=spf1 include:_spf.protonmail.ch ~all",
+  ]
+}
+
+resource "aws_route53_record" "carter_jones_org_mx" {
+  zone_id = aws_route53_zone.carter_jones_org.zone_id
+  name    = "carter-jones.org"
+  type    = "MX"
+  ttl     = 172800
+
+  records = [
+    "10 mail.protonmail.ch.",
+    "20 mailsec.protonmail.ch.",
+  ]
+}
+
+resource "aws_route53_record" "carter_jones_org_dkim1" {
+  zone_id = aws_route53_zone.carter_jones_org.zone_id
+  name    = "protonmail._domainkey.carter-jones.org"
+  type    = "CNAME"
+  records = [
+    "protonmail.domainkey.dexhpne4krzsh24umuswnix6lldzkrbrhnj7mpvy7e3iml43st3iq.domains.proton.ch.",
+  ]
+  ttl = 300
+}
+
+resource "aws_route53_record" "carter_jones_org_dkim2" {
+  zone_id = aws_route53_zone.carter_jones_org.zone_id
+  name    = "protonmail2._domainkey.carter-jones.org"
+  type    = "CNAME"
+  records = [
+    "protonmail2.domainkey.dexhpne4krzsh24umuswnix6lldzkrbrhnj7mpvy7e3iml43st3iq.domains.proton.ch.",
+  ]
+  ttl = 300
+}
+
+resource "aws_route53_record" "carter_jones_org_dkim3" {
+  zone_id = aws_route53_zone.carter_jones_org.zone_id
+  name    = "protonmail3._domainkey.carter-jones.org"
+  type    = "CNAME"
+  records = [
+    "protonmail3.domainkey.dexhpne4krzsh24umuswnix6lldzkrbrhnj7mpvy7e3iml43st3iq.domains.proton.ch.",
+  ]
+  ttl = 300
+}
+
+resource "aws_route53_record" "carter_jones_org_dmarc" {
+  zone_id = aws_route53_zone.carter_jones_org.zone_id
+  name    = "_dmarc.carter-jones.org"
+  type    = "TXT"
+  ttl     = 300
+  records = [
+    "v=DMARC1; p=reject; pct=100; adkim=s; aspf=s",
   ]
 }
